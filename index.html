@@ -272,6 +272,8 @@ footer b{font-size:16px;font-weight:800}
 .epc small{font-size:12px;font-weight:600;color:var(--gray)}
 .qty{position:absolute;top:-4px;right:-10px;background:var(--alert);color:#fff;font-size:12px;font-weight:900;border-radius:999px;padding:3px 7px;line-height:1}
 .embed .load{position:absolute;inset:0}
+.hor-txt{display:grid;gap:4px;background:var(--bg);border-radius:12px;padding:10px 12px}
+.hor-txt b{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
 [data-hide]{display:none!important}
 @media (min-width:760px){.hero .wrap{max-width:980px;padding-block:40px 48px;gap:24px}.hero-head{grid-template-areas:"mojon txt hys";grid-template-columns:auto 1fr auto;gap:22px;align-items:center}.mojon{width:72px;padding:15px 0 11px}.mojon strong{font-size:38px}.hero .bajada{white-space:nowrap}.hero-hys{width:150px}.hero-hys img{width:84px;height:84px}.hero-hys small{font-size:11.5px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -340,14 +342,14 @@ footer b{font-size:16px;font-weight:800}
 
   <!-- 1 · Hoja de ruta -->
   <section class="sec" id="hoja-de-ruta">
-    <div class="sec-head"><div class="step">1</div><div><h2>Hoja de ruta</h2><p>Elegí tu recorrido: origen, tramo y destino.</p></div></div>
+    <div class="sec-head"><div class="step">1</div><div><h2>Hoja de ruta</h2><p>Elegí tu recorrido: origen y destino.</p></div></div>
     <div class="tabs" role="tablist" id="tabs"></div>
     <div id="ruta"></div>
   </section>
 
   <!-- 2 · Puntos de carga -->
   <section class="sec" id="carga">
-    <div class="sec-head"><div class="step">2</div><div><h2>Carga y descarga</h2><p>Horarios, turnos y demoras. Deslizá para ver cada punto.</p></div></div>
+    <div class="sec-head"><div class="step">2</div><div><h2>Carga y descarga</h2><p>Días y horarios de cada punto. Tocá el nombre o deslizá.</p></div></div>
     <h3 class="sub">Puntos de carga</h3>
     <div class="carousel" id="carCarga"></div>
     <h3 class="sub down">Puntos de descarga</h3>
@@ -501,40 +503,10 @@ const DATA={
     {cifra:"+100",texto:"Unidades en la operación Arenas",fuente:"Dato a validar",ej:true},
     {cifra:"24/7",texto:"Monitoreo y guardia HYS",fuente:"Dato a validar",ej:true}
   ],
-  origenes:{
-    mangrullo:{nombre:"El Mangrullo",localidad:"Ibicuy, Entre Ríos",estado:"ok",estadoTxt:"Despacho 24 hs",
-      demora:{nivel:"ok",txt:"Sin demora",act:"Actualizado hoy 07:30"},
-      horarios:[["Lunes a viernes","24 hs"],["Sábados","24 hs"],["Domingos","24 hs"]],
-      franjas:["00:00–03:30","04:00–07:30","08:00–11:30","12:00–15:30","16:00–19:30","20:00–23:30"],
-      turno:"Ingreso con turno asignado. Anotate hasta 1 hora antes.",
-      cons:["Consideración de carga a completar","Consideración de ingreso a completar"],maps:"#",ej:true},
-    sanpedro:{nombre:"San Pedro Arenas",localidad:"San Pedro, Buenos Aires",estado:"warn",estadoTxt:"Horario reducido",
-      demora:{nivel:"warn",txt:"Demora 2 horas",act:"Actualizado hoy 07:30"},
-      horarios:[["Lunes a viernes","24 hs"],["Sábados","00:00–12:00"],["Domingos","14:00–22:00"]],
-      franjas:[],turno:"Consultá el turno con Coordinación.",
-      cons:["Consideración de carga a completar"],maps:"#",ej:true},
-    carga3:{nombre:"Punto de carga 3",localidad:"Localidad a definir",estado:"warn",estadoTxt:"Horario reducido",
-      demora:{nivel:"alert",txt:"Demora 4 horas",act:"Actualizado hoy 07:30"},
-      horarios:[["Lunes a viernes","07:00–18:00"],["Sábados","07:00–12:00"],["Domingos","No operativo"]],
-      franjas:[],turno:"",cons:[],maps:"#",ej:true}
-  },
-  destinos:{
-    anelo:{nombre:"Planta Añelo",localidad:"Añelo, Neuquén",estado:"ok",estadoTxt:"Recepción 24 hs",
-      demora:{nivel:"ok",txt:"Sin demora",act:"Actualizado hoy 07:30"},
-      horarios:[["Lunes a viernes","24 hs"],["Sábados","24 hs"],["Domingos","24 hs"]],
-      franjas:[],turno:"Presentá el remito firmado al ingresar.",
-      cons:["Consideración de descarga a completar","Requisito de ingreso a completar"],maps:"#",ej:true},
-    locacion2:{nombre:"Locación de descarga 2",localidad:"Añelo, Neuquén",estado:"ok",estadoTxt:"Recepción 24 hs",
-      demora:{nivel:"alert",txt:"Demora +4 horas",act:"Actualizado hoy 07:30"},
-      horarios:[["Lunes a viernes","24 hs"],["Sábados","24 hs"],["Domingos","24 hs"]],
-      franjas:[],turno:"",cons:["Consideración de descarga a completar"],maps:"#",ej:true}
-  },
-  recorridos:[
-    {id:"mangrullo-anelo",nombre:"Mangrullo → Añelo",origen:"mangrullo",destino:"anelo",km:"1.274",mymaps:"",navegar:"#",
-      cons:["Tramo crítico a completar (obras, curvas, rotondas sin iluminación)","Parada recomendada en Punto SIXCO a completar"],activo:true,ej:true},
-    {id:"sanpedro-anelo",nombre:"San Pedro → Añelo",origen:"sanpedro",destino:"anelo",km:"—",mymaps:"",navegar:"#",
-      cons:["Consideración del tramo a completar"],activo:true,ej:true}
-  ],
+  /* Origen: export de la plataforma (Rutas_1.csv). Solo datos del export. */
+  origenes:{"cantera-el-mangrullo": {"nombre": "Cantera El Mangrullo", "localidad": "Ibicuy", "maps": "https://maps.app.goo.gl/zengEqTe69vjbWTv7", "horario": "Lunes a Domingo 24hs continuas"}, "arenera-del-arroyo": {"nombre": "Arenera del Arroyo", "localidad": "Cilio", "maps": "https://maps.app.goo.gl/UDnQeeBmVLkcjFD4A", "horario": "Lun-Vie 07:00-18:00 hs | Sáb 07:00-12:00 hs"}, "arenera-buenos-aires-norte": {"nombre": "Arenera Buenos Aires Norte", "localidad": "San Pedro", "maps": "https://maps.app.goo.gl/Ux9V9okSdx5ARUHeA", "horario": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0"}, "arenas-santa-rosa": {"nombre": "Arenas Santa Rosa", "localidad": "Santa Rosa (Santa Fe)", "maps": "https://maps.app.goo.gl/vvE5EnhaqgHcqTKDA?g_st=aw", "horario": "Lunes a Viernes: 07:00 a 18:00hs."}},
+  destinos:{"planta-arenas-ypf-anelo": {"nombre": "Planta Arenas YPF Añelo", "localidad": "Añelo, Neuquén", "maps": "https://maps.app.goo.gl/EtaMAZscksFsrxNX7", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-laje46": {"nombre": "Pozo LAJE46", "localidad": "", "maps": "https://maps.app.goo.gl/gG7ayi6tWFYTUja59", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-elg8-2": {"nombre": "Pozo ELG8-2", "localidad": "", "maps": "https://www.google.com/maps/d/edit?mid=1GKiXek6eQXwEEMOdOrGUaP-XiS8gRZs&usp=sharing", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-elg5-2": {"nombre": "Pozo ELG5-2", "localidad": "", "maps": "https://www.google.com/maps/d/edit?mid=1GKiXek6eQXwEEMOdOrGUaP-XiS8gRZs&usp=sharing", "horario": "Lunes a Domingo 24hs continuas"}},
+  recorridos:[{"id": "mangrullo-anelo", "nombre": "Mangrullo → Añelo", "origen": "cantera-el-mangrullo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun a dom 24:00hs", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "cilio-anelo", "nombre": "Cilio → Añelo", "origen": "arenera-del-arroyo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun-Vie 07:00-18:00 hs | Sáb 07:00-12:00 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "mangrullo-laje46", "nombre": "Mangrullo → LAJE46", "origen": "cantera-el-mangrullo", "destino": "pozo-laje46", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "mangrullo-elg8-2", "nombre": "Mangrullo → ELG8-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg8-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "mangrullo-elg5-2", "nombre": "Mangrullo → ELG5-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg5-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "sanpedro-laje46", "nombre": "San Pedro → LAJE46", "origen": "arenera-buenos-aires-norte", "destino": "pozo-laje46", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "sanpedro-anelo", "nombre": "San Pedro → Añelo", "origen": "arenera-buenos-aires-norte", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun 6:00 a Sáb 13 hs | Dom 14 a 22 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "san-pedro-elg5-2", "nombre": "San Pedro → ELG5-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg5-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "san-pedro-elg8-2", "nombre": "San Pedro → ELG8-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg8-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "santa-rosa-anelo", "nombre": "Santa Rosa → Añelo", "origen": "arenas-santa-rosa", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lunes a Viernes: 07:00 a 18:00hs.", "horarioDescarga": "Lunes a Domingo 24hs continuas"}],
   clima:[
     {lugar:"Ibicuy",lat:-33.7267,lon:-59.1811},
     {lugar:"Catriló",lat:-36.4067,lon:-63.4225},
@@ -604,52 +576,54 @@ function embedPlaceholder(el,src,label){
 document.querySelectorAll(".embed[data-label]").forEach(el=>embedPlaceholder(el,el.dataset.src,el.dataset.label));
 
 /* Recorridos */
+const lineas=t=>String(t||"").split("|").map(x=>x.trim()).filter(Boolean);
+const horarioHTML=(t,label)=>t?`<div class="hor-txt">${label?`<span class="eyebrow">${esc(label)}</span>`:""}${lineas(t).map(l=>`<b>${esc(l)}</b>`).join("")}</div>`:"";
+const llegar=(url,txt)=>url?`<a class="btn sec2" href="${esc(url)}" target="_blank" rel="noopener">${ICON.pin}${esc(txt||"Cómo llegar")}</a>`:"";
 (function(){
-  const R=DATA.recorridos.filter(r=>r.activo),tabs=$("#tabs"),box=$("#ruta");
+  const R=DATA.recorridos.filter(r=>r.activo!==false),tabs=$("#tabs"),box=$("#ruta");
   tabs.innerHTML=R.map((r,k)=>`<button class="tab" role="tab" type="button" aria-selected="${k===0}" data-k="${k}">${esc(r.nombre)}</button>`).join("");
   const render=k=>{
     const r=R[k],o=DATA.origenes[r.origen],d=DATA.destinos[r.destino];
-    box.innerHTML=`<div class="card" data-s="${esc(r.nombre+" "+o.nombre+" "+d.nombre+" hoja de ruta recorrido")}"><div class="ruta">
-      <div class="tramo"><div class="rail"><span class="pt"></span></div><div class="body" style="display:grid;gap:8px">
-        <span class="eyebrow">Origen</span><h3>${esc(o.nombre)}</h3><p>${esc(o.localidad)}</p>
-        <div class="demora ${o.demora.nivel}"><i></i><span>Demora en carga</span><b>${esc(o.demora.txt)}</b></div>
-        ${o.turno?`<p style="color:var(--ink);font-size:14px">${esc(o.turno)}</p>`:""}
-        <ul class="cons">${o.cons.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
-      </div></div>
-      <div class="tramo"><div class="rail"></div><div class="body" style="display:grid;gap:10px">
+    const tramo=(r.km||r.mymaps||r.navegar||(r.cons&&r.cons.length))?`<div class="tramo"><div class="rail"></div><div class="body" style="display:grid;gap:10px">
         <span class="eyebrow">Tramo</span>
-        <div class="kmtot">${esc(r.km)} <span>km aprox.</span></div>
-        <div class="embed" id="mapRuta"></div>
-        <div class="btns"><a class="btn sec2" href="${esc(r.mymaps||"#")}" target="_blank" rel="noopener">${ICON.map}Mapa completo</a><a class="btn pri" href="${esc(r.navegar||"#")}" target="_blank" rel="noopener">${ICON.nav}Navegar</a></div>
-        <h4 style="font-size:15px;font-weight:800">A tener en cuenta en este tramo</h4>
-        <ul class="cons alert">${r.cons.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+        ${r.km?`<div class="kmtot">${esc(r.km)} <span>km aprox.</span></div>`:""}
+        ${r.mymaps?`<div class="embed" id="mapRuta"></div>`:""}
+        ${(r.mymaps||r.navegar)?`<div class="btns">${r.mymaps?`<a class="btn sec2" href="${esc(r.mymaps)}" target="_blank" rel="noopener">${ICON.map}Mapa completo</a>`:""}${r.navegar?`<a class="btn pri" href="${esc(r.navegar)}" target="_blank" rel="noopener">${ICON.nav}Navegar</a>`:""}</div>`:""}
+        ${r.cons&&r.cons.length?`<h4 style="font-size:15px;font-weight:800">A tener en cuenta en este tramo</h4><ul class="cons alert">${r.cons.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`:""}
+      </div></div>`:`<div class="tramo"><div class="rail"></div><div class="body" style="padding-bottom:18px"></div></div>`;
+    box.innerHTML=`<div class="card" data-s="${esc(r.nombre+" "+o.nombre+" "+d.nombre+" "+o.localidad+" hoja de ruta recorrido")}"><div class="ruta">
+      <div class="tramo"><div class="rail"><span class="pt"></span></div><div class="body" style="display:grid;gap:8px">
+        <span class="eyebrow">Origen · carga</span><h3>${esc(o.nombre)}</h3>${o.localidad?`<p>${esc(o.localidad)}</p>`:""}
+        ${horarioHTML(r.horarioCarga||o.horario,"Días y horarios de carga")}
+        ${llegar(o.maps,"Cómo llegar a la carga")}
       </div></div>
+      ${tramo}
       <div class="tramo"><div class="rail"><span class="pt"></span></div><div class="body" style="display:grid;gap:8px;padding-bottom:0">
-        <span class="eyebrow">Destino</span><h3>${esc(d.nombre)}</h3><p>${esc(d.localidad)}</p>
-        <div class="demora ${d.demora.nivel}"><i></i><span>Demora en descarga</span><b>${esc(d.demora.txt)}</b></div>
-        <ul class="cons">${d.cons.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+        <span class="eyebrow">Destino · descarga</span><h3>${esc(d.nombre)}</h3>${d.localidad?`<p>${esc(d.localidad)}</p>`:""}
+        ${horarioHTML(r.horarioDescarga||d.horario,"Días y horarios de descarga")}
+        ${llegar(d.maps,"Cómo llegar a la descarga")}
       </div></div>
-    </div>${ej(r)}</div>`;
-    embedPlaceholder($("#mapRuta"),r.mymaps,"Mapa del recorrido");
+    </div></div>`;
+    if(r.mymaps)embedPlaceholder($("#mapRuta"),r.mymaps,"Mapa del recorrido");
     [...tabs.children].forEach((t,i)=>t.setAttribute("aria-selected",i===k));
   };
   tabs.addEventListener("click",e=>{const t=e.target.closest(".tab");if(t)render(+t.dataset.k)});
-  render(0);
+  if(R.length)render(0);
 })();
 
 /* Puntos de carga y descarga · carrusel */
 const ARROW=d=>`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d<0?"m15 5-7 7 7 7":"m9 5 7 7-7 7"}"/></svg>`;
 function puntoCard(o,tipo){
-  return `<div class="card slide" data-s="${esc(o.nombre+" "+o.localidad+" "+tipo+" horario turno demora")}">
-  <div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div style="min-width:0"><h3>${esc(o.nombre)}</h3><p>${esc(o.localidad)}</p></div><span class="pill ${o.estado}">${esc(o.estadoTxt)}</span></div>
-  <div class="demora ${o.demora.nivel}"><i></i><span>Demora · ${esc(o.demora.act)}</span><b>${esc(o.demora.txt)}</b></div>
-  <table class="hor">${o.horarios.map(h=>`<tr><td>${esc(h[0])}</td><td>${esc(h[1])}</td></tr>`).join("")}</table>
-  ${o.franjas.length?`<span class="eyebrow">Franjas de ingreso</span><div class="franjas">${o.franjas.map(f=>`<span>${esc(f)}</span>`).join("")}</div>`:""}
+  return `<div class="card slide" data-s="${esc(o.nombre+" "+(o.localidad||"")+" "+tipo+" horario")}">
+  <div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div style="min-width:0"><h3>${esc(o.nombre)}</h3>${o.localidad?`<p>${esc(o.localidad)}</p>`:""}</div>${o.estadoTxt?`<span class="pill ${o.estado}">${esc(o.estadoTxt)}</span>`:""}</div>
+  ${o.demora?`<div class="demora ${o.demora.nivel}"><i></i><span>Demora${o.demora.act?" · "+esc(o.demora.act):""}</span><b>${esc(o.demora.txt)}</b></div>`:""}
+  ${o.horarios?`<table class="hor">${o.horarios.map(h=>`<tr><td>${esc(h[0])}</td><td>${esc(h[1])}</td></tr>`).join("")}</table>`:horarioHTML(o.horario,"Días y horarios")}
+  ${o.franjas&&o.franjas.length?`<span class="eyebrow">Franjas de ingreso</span><div class="franjas">${o.franjas.map(f=>`<span>${esc(f)}</span>`).join("")}</div>`:""}
   ${o.turno?`<p style="color:var(--ink);font-size:14px">${esc(o.turno)}</p>`:""}
-  <a class="btn sec2" href="${esc(o.maps)}" target="_blank" rel="noopener">${ICON.pin}Cómo llegar</a>${ej(o)}</div>`;
+  ${llegar(o.maps)}${ej(o)}</div>`;
 }
 function carousel(el,items,tipo){
-  el.innerHTML=`<div class="car-chips"${items.length<2?" hidden":""} role="group" aria-label="Elegí un punto">${items.map((o,i)=>`<button class="car-chip" type="button" data-i="${i}" aria-pressed="false" title="${esc(o.demora.txt)}"><i class="${o.demora.nivel}"></i>${esc(o.nombre)}</button>`).join("")}</div>
+  el.innerHTML=`<div class="car-chips"${items.length<2?" hidden":""} role="group" aria-label="Elegí un punto">${items.map((o,i)=>`<button class="car-chip" type="button" data-i="${i}" aria-pressed="false" ${o.demora?`title="${esc(o.demora.txt)}"`:""}>${o.demora?`<i class="${o.demora.nivel}"></i>`:""}${esc(o.nombre)}</button>`).join("")}</div>
   <div class="car-track" tabindex="0" aria-label="${esc(tipo)}">${items.map(o=>puntoCard(o,tipo)).join("")}</div>
   <div class="car-nav"${items.length<2?" hidden":""}><button class="car-btn" type="button" data-d="-1" aria-label="Anterior">${ARROW(-1)}</button><span class="car-count" style="flex:1;text-align:center"></span><button class="car-btn" type="button" data-d="1" aria-label="Siguiente">${ARROW(1)}</button></div>`;
   const tr=el.querySelector(".car-track"),dots=[...el.querySelectorAll(".car-chip")],cnt=el.querySelector(".car-count"),prev=el.querySelector('[data-d="-1"]'),next=el.querySelector('[data-d="1"]');
