@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kilómetro Cero</title>
+<meta name="description" content="Kilómetro Cero · Todo lo necesario para planificar un viaje seguro. SIXCO Arenas.">
+<meta name="theme-color" content="#00728F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+<style>
+/* Layout: columna móvil (máx. 760px) con bloques de color de marca; cada sección se señaliza como un mojón de ruta (KM) */
+:root{
+  --petrol:#00728F; --petrol-deep:#00566C; --sky:#5DB7CC; --sky-soft:#E2F2F6;
+  --ink:#231F20; --gray:#656668; --bg:#F3F7F8; --surface:#FFFFFF; --line:#D6E2E6;
+  --urgent:#F2742B; --urgent-ink:#FFFFFF; --alert:#C9501A; --orange-soft:#FDE8DC; --ok:#17885A; --ok-soft:#DFF3EA; --warn:#B87400; --warn-soft:#FBEFD8;
+  --on-petrol:#FFFFFF; --road:#00566C; --hero-muted:#C7DDE3;
+  --font:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --petrol:#1A8BA8; --petrol-deep:#0B5E73; --sky:#6FC5D9; --sky-soft:#12323B;
+  --ink:#EAF1F3; --gray:#A3AFB4; --bg:#0D171A; --surface:#152227; --line:#26383F;
+  --urgent:#F5823E; --urgent-ink:#1A0E06; --alert:#F5915A; --orange-soft:#3A2416; --ok:#4CC58E; --ok-soft:#12322A; --warn:#E2A847; --warn-soft:#33270F;
+  --on-petrol:#FFFFFF; --road:#083E4C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --petrol:#1A8BA8; --petrol-deep:#0B5E73; --sky:#6FC5D9; --sky-soft:#12323B;
+  --ink:#EAF1F3; --gray:#A3AFB4; --bg:#0D171A; --surface:#152227; --line:#26383F;
+  --urgent:#F5823E; --urgent-ink:#1A0E06; --alert:#F5915A; --orange-soft:#3A2416; --ok:#4CC58E; --ok-soft:#12322A; --warn:#E2A847; --warn-soft:#33270F;
+  --on-petrol:#FFFFFF; --road:#083E4C; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;font-weight:500;-webkit-text-size-adjust:100%;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--surface)}
+a{color:inherit}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{margin:0;line-height:1.15;text-wrap:balance;letter-spacing:0}
+p{margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px;border-radius:6px}
+.ribbon{background:var(--ink);color:var(--bg);font-size:12px;font-weight:700;text-align:center;padding:6px 16px}
+
+/* Header */
+.head{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--surface);box-shadow:0 1px 0 var(--line)}
+.head-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.logo{height:34px;width:auto}
+:root[data-theme="dark"] .logo{background:#fff;border-radius:8px;padding:3px 6px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo{background:#fff;border-radius:8px;padding:3px 6px}}
+.head-tag{font-size:13px;font-weight:800;color:var(--petrol);text-align:right;line-height:1.1}
+.head-tag span{display:block;font-weight:600;color:var(--gray);font-size:11px}
+.nav{position:relative;display:flex;gap:6px;overflow-x:auto;padding-block:0 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px));scroll-padding-inline:max(16px,env(safe-area-inset-left,0px));-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 72px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 72px),transparent)}
+.nav.mid{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 72px),transparent);mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 72px),transparent)}
+.nav.end{-webkit-mask-image:linear-gradient(90deg,transparent,#000 72px);mask-image:linear-gradient(90deg,transparent,#000 72px)}
+@media (min-width:600px){.nav{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0;-webkit-mask-image:none;mask-image:none}}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:0 0 auto;scroll-snap-align:start;white-space:nowrap;text-decoration:none;font-size:12.5px;font-weight:700;padding:7px 11px;border-radius:999px;background:var(--sky-soft);color:var(--petrol-deep);min-height:34px;display:flex;align-items:center}
+:root[data-theme="dark"] .nav a{color:var(--sky)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .nav a{color:var(--sky)}}
+.nav a.on{background:var(--petrol);color:var(--on-petrol)}
+
+/* Urgente */
+.urgent{background:var(--urgent);color:var(--urgent-ink)}
+.urgent .wrap{display:flex;align-items:center;gap:12px;padding-block:12px}
+.urgent .ico{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center}
+.urgent b{display:block;font-size:15px;font-weight:800}
+.urgent small{font-size:13px;font-weight:600;opacity:.95}
+.urgent a.btn-w{margin-left:auto;flex:0 0 auto;background:#fff;color:#B4470E;font-weight:800;font-size:14px;text-decoration:none;padding:10px 14px;border-radius:10px;min-height:44px;display:flex;align-items:center}
+
+/* Hero */
+.hero{background:var(--petrol);color:var(--on-petrol);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:12px;background:repeating-linear-gradient(90deg,#fff 0 38px,transparent 38px 64px);opacity:.85}
+.hero .wrap{padding-block:28px 40px;display:grid;gap:20px;position:relative;z-index:1}
+.hero-head{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"mojon . hys" "txt txt txt";gap:16px 14px;align-items:center}
+.mojon{grid-area:mojon;width:58px;background:#fff;color:var(--petrol);border-radius:28px 28px 6px 6px;padding:12px 0 9px;text-align:center;box-shadow:0 6px 0 rgba(0,0,0,.18)}
+.mojon b{display:block;font-size:12px;font-weight:800;line-height:1}
+.mojon strong{display:block;font-size:30px;font-weight:900;line-height:1}
+.hero-txt{grid-area:txt;min-width:0}
+.hero h1{font-size:clamp(26px,8.6vw,56px);font-weight:900;line-height:1;white-space:nowrap}
+.hero .bajada{font-size:clamp(14px,3.9vw,19px);font-weight:600;margin-top:8px}
+.hero .firma{display:inline-block;margin-top:12px;font-size:13px;font-weight:800;background:var(--sky);color:#00303C;padding:5px 10px;border-radius:6px}
+.hero-hys{grid-area:hys;display:grid;justify-items:center;gap:6px;width:116px;text-align:center}
+.hero-hys img{width:62px;height:62px;border-radius:50%;background:#fff;padding:2px}
+.hero-hys small{font-size:10.5px;font-weight:600;line-height:1.3;color:var(--hero-muted)}
+.datos-wrap{display:grid;gap:10px}
+.datos{background:#fff;color:var(--ink);border-radius:var(--r);padding:16px 18px;display:flex;align-items:center;gap:14px;min-height:92px}
+.datos .cifra{font-size:34px;font-weight:900;color:var(--petrol);line-height:1;font-variant-numeric:tabular-nums;flex:0 0 auto}
+.datos .txt{font-size:14px;font-weight:600;color:#3A3A3C}
+.datos .txt small{display:block;color:#656668;font-weight:500;font-size:12px;margin-top:2px}
+.dots{display:flex;gap:6px;justify-content:center}
+.dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4)}
+.dots i.on{background:#fff;width:20px;border-radius:4px}
+.hero-cta{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hero-cta a{background:var(--petrol-deep);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:12px;border-radius:12px;display:flex;align-items:center;gap:8px;min-height:52px}
+.hero-cta a:first-child{background:#fff;color:var(--petrol)}
+
+/* Buscador */
+.search{margin-top:-1px;padding-block:20px 4px}
+.search label{display:block;font-size:14px;font-weight:800;margin-bottom:8px}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:0 12px;min-height:52px}
+.search-box:focus-within{border-color:var(--petrol)}
+.search input{flex:1;border:0;background:transparent;font:inherit;font-size:16px;color:var(--ink);min-width:0;height:48px}
+.search input:focus{outline:none}
+.noresult{margin-top:12px;font-size:14px;color:var(--gray);font-weight:600}
+
+/* Secciones */
+.sec{padding-block:30px 6px;display:grid;gap:14px}
+.sec-head{display:flex;align-items:center;gap:12px}
+.sec-head h2{font-size:24px;font-weight:800}
+.sec-head p{font-size:14px;color:var(--gray);font-weight:500;margin-top:2px}
+
+.card{background:var(--surface);border-radius:var(--r);padding:16px;display:grid;gap:10px;box-shadow:0 1px 0 var(--line)}
+.card h3{font-size:17px;font-weight:800}
+.card p{font-size:14.5px;color:var(--gray)}
+.grid2{display:grid;gap:12px}
+@media (min-width:600px){.grid2{grid-template-columns:1fr 1fr}}
+.ej{font-size:11px;font-weight:700;color:var(--warn);background:var(--warn-soft);padding:2px 7px;border-radius:5px;justify-self:start}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.ok::before,.pill.warn::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+
+/* Botones */
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:800;font-size:14px;border-radius:12px;padding:12px;min-height:50px;border:0;cursor:pointer;text-align:center}
+.btn.pri{background:var(--petrol);color:var(--on-petrol)}
+.btn.sec2{background:var(--sky-soft);color:var(--petrol-deep)}
+:root[data-theme="dark"] .btn.sec2{color:var(--sky)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.sec2{color:var(--sky)}}
+.btn.wa{background:#1FAF5A;color:#fff}
+.btn svg,.hero-cta svg,.bar svg{flex:0 0 auto}
+
+/* Recorridos */
+.tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:2px solid var(--line);background:var(--surface);font-weight:800;font-size:14px;padding:10px 14px;border-radius:12px;cursor:pointer;min-height:46px}
+.tab[aria-selected="true"]{background:var(--petrol);border-color:var(--petrol);color:var(--on-petrol)}
+.ruta{display:grid;gap:0}
+.tramo{display:grid;grid-template-columns:28px 1fr;gap:12px}
+.rail{position:relative;display:flex;justify-content:center}
+.rail::before{content:"";position:absolute;top:0;bottom:0;width:6px;background:repeating-linear-gradient(180deg,var(--petrol) 0 14px,transparent 14px 22px);border-radius:3px}
+.tramo:first-child .rail::before{top:18px}
+.tramo:last-child .rail::before{bottom:calc(100% - 18px)}
+.rail .pt{position:relative;margin-top:8px;width:22px;height:22px;border-radius:50%;background:var(--surface);border:5px solid var(--petrol)}
+.tramo:last-child .rail .pt{background:var(--petrol);border-color:var(--sky)}
+.tramo .body{padding-bottom:14px;min-width:0}
+.eyebrow{font-size:12px;font-weight:800;color:var(--petrol)}
+:root[data-theme="dark"] .eyebrow{color:var(--sky)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .eyebrow{color:var(--sky)}}
+.kmtot{font-size:28px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.kmtot span{font-size:15px;font-weight:700;color:var(--gray)}
+ul.cons{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+ul.cons li{display:grid;grid-template-columns:20px 1fr;gap:8px;font-size:14.5px;font-weight:500;color:var(--ink)}
+ul.cons li::before{content:"";width:12px;height:12px;margin-top:5px;border-radius:3px;background:var(--sky)}
+ul.cons.alert li::before{background:var(--urgent)}
+.hor{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.hor td{padding:7px 0;border-bottom:1px solid var(--line)}
+.hor td:last-child{text-align:right;font-weight:800}
+.hor tr:last-child td{border-bottom:0}
+.franjas{display:flex;flex-wrap:wrap;gap:6px}
+.franjas span{font-size:12.5px;font-weight:700;background:var(--bg);padding:5px 9px;border-radius:7px;font-variant-numeric:tabular-nums}
+
+/* Embebidos que cargan al tocar */
+.embed{position:relative;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,var(--sky-soft),var(--bg));aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;border:2px solid var(--line)}
+.embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.embed .load{display:grid;justify-items:center;gap:6px;text-align:center;padding:16px;background:none;border:0;cursor:pointer;width:100%;height:100%;align-content:center}
+.embed .load b{font-size:15px;font-weight:800;color:var(--petrol)}
+:root[data-theme="dark"] .embed .load b{color:var(--sky)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .embed .load b{color:var(--sky)}}
+.embed .load small{font-size:12px;color:var(--gray);font-weight:600}
+.embed .load .circle{width:54px;height:54px;border-radius:50%;background:var(--petrol);color:#fff;display:grid;place-items:center}
+
+/* Documentos */
+.docs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:600px){.docs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+a.doc{text-decoration:none;background:var(--surface);border-radius:var(--r);overflow:hidden;display:grid;align-content:start;box-shadow:0 1px 0 var(--line)}
+.thumb{aspect-ratio:3/4;background:#fff;border-bottom:1px solid var(--line);position:relative;padding:14% 12%;display:grid;align-content:start;gap:7px}
+.thumb::before{content:"";height:10px;width:55%;background:#00728F;border-radius:2px}
+.thumb i{display:block;height:6px;background:#E3E9EB;border-radius:2px}
+.thumb i:nth-child(3n){width:70%}
+.thumb .type{position:absolute;right:8px;bottom:8px;font-size:10px;font-weight:800;background:#00728F;color:#fff;padding:3px 6px;border-radius:4px}
+.thumb.img{background:linear-gradient(135deg,#E2F2F6,#BFE3EC)}
+.thumb.img::before{background:#00566C}
+.doc .meta{padding:10px 12px 12px;display:grid;gap:3px}
+.doc .meta b{font-size:14px;font-weight:800;line-height:1.25}
+.doc .meta span{font-size:12px;color:var(--gray);font-weight:600}
+
+/* EPP */
+.epp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.epp div{background:var(--bg);border-radius:12px;padding:12px 6px;text-align:center;font-size:12.5px;font-weight:700;display:grid;justify-items:center;gap:6px}
+.epp svg{color:var(--petrol)}
+.hys-row{display:flex;align-items:center;gap:14px}
+.hys-row img{width:64px;height:64px;flex:0 0 auto;background:#fff;border-radius:50%}
+
+/* Pasos */
+ol.pasos{margin:0;padding:0;list-style:none;counter-reset:p;display:grid;gap:10px}
+ol.pasos li{counter-increment:p;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;font-size:14.5px}
+ol.pasos li::before{content:counter(p);width:30px;height:30px;border-radius:50%;background:var(--petrol);color:#fff;font-weight:800;display:grid;place-items:center;font-size:14px}
+ol.pasos b{display:block;font-weight:800}
+ol.pasos span{color:var(--gray)}
+
+/* Avisos */
+.aviso{display:grid;grid-template-columns:58px 1fr;gap:12px;align-items:start}
+.fecha{background:var(--petrol);color:#fff;border-radius:10px;text-align:center;padding:7px 0;line-height:1}
+.fecha b{display:block;font-size:22px;font-weight:900}
+.fecha small{font-size:11px;font-weight:800}
+.video{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;text-decoration:none}
+.video .vt{aspect-ratio:16/10;border-radius:10px;background:linear-gradient(135deg,var(--petrol-deep),var(--petrol));display:grid;place-items:center;color:#fff}
+
+/* FAQ */
+details{background:var(--surface);border-radius:12px;box-shadow:0 1px 0 var(--line)}
+summary{list-style:none;cursor:pointer;padding:15px 44px 15px 16px;font-weight:700;font-size:15px;position:relative;min-height:52px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:22px;font-weight:700;color:var(--petrol)}
+details[open] summary::after{content:"–"}
+details p{padding:0 16px 16px;font-size:14.5px;color:var(--gray)}
+
+/* Contacto */
+.contacto{display:grid;gap:10px}
+.contacto .who b{display:block;font-size:16px;font-weight:800}
+.contacto .who span{font-size:13px;color:var(--gray);font-weight:600}
+.num{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;user-select:all}
+
+footer{margin-top:34px;background:var(--road);color:#fff}
+footer .wrap{padding-block:26px;display:grid;gap:8px;font-size:13px}
+footer b{font-size:16px;font-weight:800}
+
+/* Barra fija inferior */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--surface);box-shadow:0 -2px 12px rgba(0,0,0,.12);padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.bar .in{max-width:760px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bar a{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:800;font-size:14px;border-radius:12px;min-height:54px;padding:8px;line-height:1.15;text-align:left}
+.bar a small{display:block;font-weight:600;font-size:11px;opacity:.92}
+.bar .inc{background:var(--urgent);color:var(--urgent-ink)}
+.bar .cop{background:var(--petrol);color:var(--on-petrol)}
+
+.step{flex:0 0 auto;width:40px;height:40px;border-radius:12px;background:var(--petrol);color:var(--on-petrol);display:grid;place-items:center;font-size:20px;font-weight:900;line-height:1}
+.sub{font-size:20px;font-weight:800;margin-top:8px;display:flex;align-items:center;gap:10px}
+.car-chips{display:flex;flex-wrap:wrap;gap:8px}
+.car-chip{border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;font-weight:700;padding:9px 14px;border-radius:12px;cursor:pointer;min-height:44px;display:flex;align-items:center;gap:8px}
+.car-chip i{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.car-chip i.ok{background:var(--ok)}.car-chip i.warn{background:var(--warn)}.car-chip i.alert{background:var(--alert)}
+.car-chip[aria-pressed="true"]{background:var(--petrol);border-color:var(--petrol);color:var(--on-petrol)}
+.car-chip[aria-pressed="true"] i{box-shadow:0 0 0 2px #fff}
+.sub::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--petrol)}
+.sub.down::before{background:var(--urgent)}
+.carousel{display:grid;gap:10px;min-width:0}
+.car-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.car-track::-webkit-scrollbar{display:none}
+.car-track>.slide{flex:0 0 100%;scroll-snap-align:start;min-width:0}
+.car-nav{display:flex;align-items:center;gap:10px}
+.car-nav[hidden]{display:none}
+.car-btn{width:44px;height:44px;border-radius:50%;border:0;background:var(--petrol);color:var(--on-petrol);display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
+.car-btn:disabled{background:var(--line);color:var(--gray);cursor:default}
+.car-dots{display:flex;gap:4px;flex:1;justify-content:center;align-items:center}
+.car-dots button{width:22px;height:22px;border:0;padding:0;background:none;cursor:pointer;display:grid;place-items:center}
+.car-dots button::before{content:"";width:10px;height:10px;border-radius:5px;background:var(--line);transition:width .2s}
+.car-dots button.on::before{width:24px;background:var(--petrol)}
+.car-count{font-size:13px;font-weight:700;color:var(--gray);font-variant-numeric:tabular-nums}
+.demora{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:0 10px;border-radius:12px;padding:10px 12px}
+.demora i{grid-row:span 2;width:12px;height:12px;border-radius:50%;background:currentColor}
+.demora span{font-size:12px;font-weight:700}
+.demora b{font-size:17px;font-weight:800}
+.demora.ok{background:var(--ok-soft);color:var(--ok)}
+.demora.warn{background:var(--warn-soft);color:var(--warn)}
+.demora.alert{background:var(--orange-soft);color:var(--alert)}
+.ic{width:54px;height:54px;border-radius:50%;background:var(--sky-soft);color:var(--petrol);display:grid;place-items:center;position:relative}
+.epc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.epc>div{background:var(--bg);border-radius:12px;padding:14px 10px;text-align:center;display:grid;justify-items:center;align-content:start;gap:6px;font-size:13px;font-weight:700}
+.epc .ic{background:var(--orange-soft);color:var(--alert)}
+.epc small{font-size:12px;font-weight:600;color:var(--gray)}
+.qty{position:absolute;top:-4px;right:-10px;background:var(--alert);color:#fff;font-size:12px;font-weight:900;border-radius:999px;padding:3px 7px;line-height:1}
+.embed .load{position:absolute;inset:0}
+[data-hide]{display:none!important}
+@media (min-width:760px){.hero .wrap{max-width:980px;padding-block:40px 48px;gap:24px}.hero-head{grid-template-areas:"mojon txt hys";grid-template-columns:auto 1fr auto;gap:22px;align-items:center}.mojon{width:72px;padding:15px 0 11px}.mojon strong{font-size:38px}.hero .bajada{white-space:nowrap}.hero-hys{width:150px}.hero-hys img{width:84px;height:84px}.hero-hys small{font-size:11.5px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<div class="ribbon">MAQUETA · los datos marcados como ejemplo se reemplazan con el material final</div>
+
+<header class="head">
+  <div class="wrap">
+    <div class="head-row">
+      <img class="logo" src="assets/logo-sixco.webp" alt="SIXCO" width="77" height="34">
+      <div class="head-tag">Kilómetro Cero<span>SIXCO Arenas</span></div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Secciones">
+      <a href="#hoja-de-ruta">Hoja de ruta</a>
+      <a href="#carga">Carga y descarga</a>
+      <a href="#en-ruta">En ruta</a>
+      <a href="#seguridad">Seguridad</a>
+      <a href="#procedimientos">Procedimientos</a>
+      <a href="#avisos">Avisos y capacitaciones</a>
+      <a href="#politicas">Políticas</a>
+      <a href="#induccion">Nuevos choferes</a>
+      <a href="#preguntas">Preguntas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <div class="hero-head">
+      <div class="mojon" aria-hidden="true"><b>KM</b><strong>0</strong></div>
+      <div class="hero-txt">
+        <h1>Kilómetro Cero</h1>
+        <p class="bajada">Todo lo necesario para planificar un viaje seguro.</p>
+        <span class="firma">SIXCO Arenas</span>
+      </div>
+      <div class="hero-hys">
+        <img src="assets/sello-hys.webp" alt="HYS SIXCO" width="84" height="84">
+        <small>Una iniciativa de Excelencia Operacional SIXCO</small>
+      </div>
+    </div>
+    <div class="datos-wrap">
+      <div class="datos" id="datos" aria-live="polite"></div>
+      <div class="dots" id="dots" aria-hidden="true"></div>
+    </div>
+    <div class="hero-cta">
+      <a href="#hoja-de-ruta"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>Planificá tu viaje</a>
+      <a data-wa="copiloto" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12Z"/></svg>Copiloto SIXCO</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="search">
+    <label for="q">¿Qué estás buscando?</label>
+    <div class="search-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Ej: descanso, Mangrullo, EPP, protocolo" autocomplete="off">
+    </div>
+    <p class="noresult" id="noresult" hidden>No encontramos resultados. Probá con otra palabra o escribile a Coordinación.</p>
+  </div>
+
+  <!-- 1 · Hoja de ruta -->
+  <section class="sec" id="hoja-de-ruta">
+    <div class="sec-head"><div class="step">1</div><div><h2>Hoja de ruta</h2><p>Elegí tu recorrido: origen, tramo y destino.</p></div></div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="ruta"></div>
+  </section>
+
+  <!-- 2 · Puntos de carga -->
+  <section class="sec" id="carga">
+    <div class="sec-head"><div class="step">2</div><div><h2>Carga y descarga</h2><p>Horarios, turnos y demoras. Deslizá para ver cada punto.</p></div></div>
+    <h3 class="sub">Puntos de carga</h3>
+    <div class="carousel" id="carCarga"></div>
+    <h3 class="sub down">Puntos de descarga</h3>
+    <div class="carousel" id="carDescarga"></div>
+  </section>
+
+  <!-- 3 · En ruta -->
+  <section class="sec" id="en-ruta">
+    <div class="sec-head"><div class="step">3</div><div><h2>En ruta</h2><p>Descansos, planilla y clima.</p></div></div>
+    <div class="card" data-s="punto sixco descanso descansos parada habilitada">
+      <span class="eyebrow">Punto SIXCO</span>
+      <h3>Descansos habilitados en ruta</h3>
+      <p>Paradas habilitadas para descansar, con servicios. Planificá tus descansos antes de salir.</p>
+      <div class="embed" data-src="" data-label="Mapa de Punto SIXCO"></div>
+      <div class="btns"><a class="btn sec2" href="#" data-todo>Ver mapa completo</a><a class="btn pri" href="#" data-todo>Ir al más cercano</a></div>
+    </div>
+    <div class="docs">
+      <a class="doc" href="#" data-todo data-s="planilla de descanso instructivo"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Completá la planilla de descanso</b><span>Instructivo paso a paso</span></div></a>
+    </div>
+    <div class="card" data-s="clima ibicuy catrilo catriló añelo anelo viento lluvia">
+      <span class="eyebrow">Clima en ruta</span>
+      <h3>Revisá el clima antes de salir</h3>
+      <div class="tabs" role="tablist" id="climaTabs"></div>
+      <div class="embed" id="climaEmbed"></div>
+    </div>
+  </section>
+
+  <!-- 4 · Seguridad -->
+  <section class="sec" id="seguridad">
+    <div class="sec-head"><div class="step">4</div><div><h2>Seguridad</h2><p>Qué hacer ante una emergencia y cómo prevenir.</p></div></div>
+    <div class="card" data-s="hys higiene seguridad contacto responsable emergencia">
+      <div class="hys-row"><img src="assets/sello-hys.webp" alt="Sello HYS" width="64" height="64"><div><span class="eyebrow">Higiene y Seguridad</span><h3>Nombre del responsable</h3><p>Lunes a domingo · 24 hs</p></div></div>
+      <span class="ej">Dato de ejemplo</span>
+      <div class="btns"><a class="btn wa" data-wa="hys" href="#">Reportar incidencia</a><a class="btn sec2" href="#contacto">Ver contactos</a></div>
+    </div>
+    <div class="docs">
+      <a class="doc" href="#" data-todo data-s="rol de llamado emergencia accidente siniestro"><div class="thumb img"><i></i><i></i><i></i><i></i><span class="type">IMG</span></div><div class="meta"><b>Rol de llamado SIXCO</b><span>A quién llamar y en qué orden</span></div></a>
+      <a class="doc" href="#" data-todo data-s="clima adverso lluvia niebla viento manejo"><div class="thumb img"><i></i><i></i><i></i><i></i><span class="type">IMG</span></div><div class="meta"><b>Manejo en clima adverso</b><span>Lluvia, niebla y viento</span></div></a>
+    </div>
+    <div class="card" data-s="epp elementos proteccion casco botines guantes lentes chaleco">
+      <span class="eyebrow">EPP obligatorio</span>
+      <h3>Bajá del camión siempre con tu EPP</h3>
+      <div class="epp" id="epp"></div>
+      <span class="ej">Lista de ejemplo · validar con HYS</span>
+    </div>
+    <div class="card" data-s="epc conos balizas matafuego matafuegos extintor proteccion colectiva">
+      <span class="eyebrow">EPC · Elementos de protección colectiva</span>
+      <h3>Llevalos siempre en la unidad</h3>
+      <div class="epc" id="epc"></div>
+    </div>
+  </section>
+
+  <!-- 5 · Procedimientos -->
+  <section class="sec" id="procedimientos">
+    <div class="sec-head"><div class="step">5</div><div><h2>Procedimientos</h2><p>Ingreso a planta, verificación y salida.</p></div></div>
+    <div class="docs">
+      <a class="doc" href="#" data-todo data-s="protocolo ingreso planta cantera"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Protocolo general de ingreso</b><span>Documentación y pasos previos</span></div></a>
+    </div>
+    <div class="card" data-s="verificacion 360 control unidad camion">
+      <span class="eyebrow">Antes de salir</span>
+      <h3>Verificación 360°</h3>
+      <p>Recorré la unidad completa y registrá el control.</p>
+      <a class="btn pri" href="#" data-todo>Hacer la verificación 360°</a>
+    </div>
+    <div class="card" data-s="salida remito estado del viaje copiloto">
+      <span class="eyebrow">Al salir de planta</span>
+      <h3>Indicá el estado de tu viaje y enviá el remito</h3>
+      <p>Lo hacés desde el Copiloto SIXCO por WhatsApp.</p>
+      <a class="btn wa" data-wa="copiloto" href="#">Abrir Copiloto SIXCO</a>
+    </div>
+  </section>
+
+  <!-- 6 · Avisos y capacitaciones -->
+  <section class="sec" id="avisos">
+    <div class="sec-head"><div class="step">6</div><div><h2>Avisos y capacitaciones</h2><p>Novedades de la operación y próximos encuentros.</p></div></div>
+    <div id="listaAvisos" style="display:grid;gap:10px"></div>
+    <div class="card" data-s="capacitaciones videos youtube educacion vial">
+      <span class="eyebrow">Capacitaciones</span>
+      <h3>Videos SIXCO</h3>
+      <div id="videos" style="display:grid;gap:12px"></div>
+    </div>
+  </section>
+
+  <!-- 7 · Políticas -->
+  <section class="sec" id="politicas">
+    <div class="sec-head"><div class="step">7</div><div><h2>Políticas</h2><p>Documentos vigentes de la operación.</p></div></div>
+    <div class="docs">
+      <a class="doc" href="#" data-todo data-s="politica integrada gestion calidad seguridad iso"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Política integrada de gestión</b><span>Calidad, seguridad y salud</span></div></a>
+      <a class="doc" href="#" data-todo data-s="politica alcohol drogas tolerancia cero"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Alcohol y drogas</b><span>Tolerancia cero</span></div></a>
+    </div>
+  </section>
+
+  <!-- 8 · Inducción -->
+  <section class="sec" id="induccion">
+    <div class="sec-head"><div class="step">8</div><div><h2>Inducción nuevos choferes</h2><p>Si es tu primer viaje con SIXCO, empezá acá.</p></div></div>
+    <div class="card" data-s="induccion nuevo chofer primer viaje copiloto instructivo">
+      <ol class="pasos">
+        <li><div><b>Conocé la operación</b><span>Material de inducción Arenas–YPF.</span></div></li>
+        <li><div><b>Aprendé a usar el Copiloto</b><span>Instructivo para choferes.</span></div></li>
+        <li><div><b>Sumate al grupo oficial</b><span>Comunicados de SIXCO–YPF por WhatsApp.</span></div></li>
+      </ol>
+      <span class="ej">Pasos de ejemplo</span>
+    </div>
+    <div class="docs">
+      <a class="doc" href="#" data-todo data-s="induccion operacion"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Inducción a la operación</b><span>Arenas–YPF</span></div></a>
+      <a class="doc" href="#" data-todo data-s="instructivo copiloto choferes"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Instructivo Copiloto SIXCO</b><span>Paso a paso</span></div></a>
+    </div>
+  </section>
+
+  <!-- 9 · Preguntas -->
+  <section class="sec" id="preguntas">
+    <div class="sec-head"><div class="step">9</div><div><h2>Preguntas frecuentes</h2><p>Respuestas cortas a lo que más consultan.</p></div></div>
+    <div id="faq" style="display:grid;gap:8px"></div>
+  </section>
+
+  <!-- 10 · Contacto -->
+  <section class="sec" id="contacto">
+    <div class="sec-head"><div class="step">10</div><div><h2>Contacto</h2><p>Escribinos por WhatsApp.</p></div></div>
+    <div class="grid2" id="contactos"></div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <b>Kilómetro Cero · SIXCO Arenas</b>
+    <span>Construimos Valor · Transportamos Confianza</span>
+    <span>Sitio de uso para choferes y transportes de la Operación Arenas–YPF.</span>
+  </div>
+</footer>
+
+<nav class="bar" aria-label="Accesos rápidos">
+  <div class="in">
+    <a class="inc" data-wa="hys" href="#"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17.5v.01"/></svg><span>Reportar incidencia<small>WhatsApp HYS</small></span></a>
+    <a class="cop" data-wa="copiloto" href="#"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12Z"/></svg><span>Copiloto SIXCO<small>Estado de tu viaje</small></span></a>
+  </div>
+</nav>
+
+<script>
+/* ===== DATOS =====
+   En la versión final esto se lee del Google Sheets (una pestaña por bloque).
+   Todo lo marcado "ej: true" es de ejemplo. */
+const DATA={
+  whatsapp:{
+    hys:{numero:"5491100000000",mensaje:"IMPORTANTE. Tuve un incidente durante el viaje.\nDominio: \nChofer: \nMotivo: "},
+    copiloto:{numero:"5491100000000",mensaje:"Hola Copiloto, quiero indicar el estado de mi viaje."}
+  },
+  datosRotativos:[
+    {cifra:"0%",texto:"Incidencias en la operación",fuente:"Período a definir",ej:true},
+    {cifra:"3.000",texto:"Descansos en Punto SIXCO",fuente:"Período a definir",ej:true},
+    {cifra:"+100",texto:"Unidades en la operación Arenas",fuente:"Dato a validar",ej:true},
+    {cifra:"24/7",texto:"Monitoreo y guardia HYS",fuente:"Dato a validar",ej:true}
+  ],
+  origenes:{
+    mangrullo:{nombre:"El Mangrullo",localidad:"Ibicuy, Entre Ríos",estado:"ok",estadoTxt:"Despacho 24 hs",
+      demora:{nivel:"ok",txt:"Sin demora",act:"Actualizado hoy 07:30"},
+      horarios:[["Lunes a viernes","24 hs"],["Sábados","24 hs"],["Domingos","24 hs"]],
+      franjas:["00:00–03:30","04:00–07:30","08:00–11:30","12:00–15:30","16:00–19:30","20:00–23:30"],
+      turno:"Ingreso con turno asignado. Anotate hasta 1 hora antes.",
+      cons:["Consideración de carga a completar","Consideración de ingreso a completar"],maps:"#",ej:true},
+    sanpedro:{nombre:"San Pedro Arenas",localidad:"San Pedro, Buenos Aires",estado:"warn",estadoTxt:"Horario reducido",
+      demora:{nivel:"warn",txt:"Demora 2 horas",act:"Actualizado hoy 07:30"},
+      horarios:[["Lunes a viernes","24 hs"],["Sábados","00:00–12:00"],["Domingos","14:00–22:00"]],
+      franjas:[],turno:"Consultá el turno con Coordinación.",
+      cons:["Consideración de carga a completar"],maps:"#",ej:true},
+    carga3:{nombre:"Punto de carga 3",localidad:"Localidad a definir",estado:"warn",estadoTxt:"Horario reducido",
+      demora:{nivel:"alert",txt:"Demora 4 horas",act:"Actualizado hoy 07:30"},
+      horarios:[["Lunes a viernes","07:00–18:00"],["Sábados","07:00–12:00"],["Domingos","No operativo"]],
+      franjas:[],turno:"",cons:[],maps:"#",ej:true}
+  },
+  destinos:{
+    anelo:{nombre:"Planta Añelo",localidad:"Añelo, Neuquén",estado:"ok",estadoTxt:"Recepción 24 hs",
+      demora:{nivel:"ok",txt:"Sin demora",act:"Actualizado hoy 07:30"},
+      horarios:[["Lunes a viernes","24 hs"],["Sábados","24 hs"],["Domingos","24 hs"]],
+      franjas:[],turno:"Presentá el remito firmado al ingresar.",
+      cons:["Consideración de descarga a completar","Requisito de ingreso a completar"],maps:"#",ej:true},
+    locacion2:{nombre:"Locación de descarga 2",localidad:"Añelo, Neuquén",estado:"ok",estadoTxt:"Recepción 24 hs",
+      demora:{nivel:"alert",txt:"Demora +4 horas",act:"Actualizado hoy 07:30"},
+      horarios:[["Lunes a viernes","24 hs"],["Sábados","24 hs"],["Domingos","24 hs"]],
+      franjas:[],turno:"",cons:["Consideración de descarga a completar"],maps:"#",ej:true}
+  },
+  recorridos:[
+    {id:"mangrullo-anelo",nombre:"Mangrullo → Añelo",origen:"mangrullo",destino:"anelo",km:"1.274",mymaps:"",navegar:"#",
+      cons:["Tramo crítico a completar (obras, curvas, rotondas sin iluminación)","Parada recomendada en Punto SIXCO a completar"],activo:true,ej:true},
+    {id:"sanpedro-anelo",nombre:"San Pedro → Añelo",origen:"sanpedro",destino:"anelo",km:"—",mymaps:"",navegar:"#",
+      cons:["Consideración del tramo a completar"],activo:true,ej:true}
+  ],
+  clima:[
+    {lugar:"Ibicuy",lat:-33.7267,lon:-59.1811},
+    {lugar:"Catriló",lat:-36.4067,lon:-63.4225},
+    {lugar:"Añelo",lat:-38.3506,lon:-68.7856}
+  ],
+  epp:[
+    {n:"Ropa de trabajo",i:"ropa"},{n:"Botines de seguridad",i:"botin"},{n:"Guantes",i:"guantes"},
+    {n:"Casco",i:"casco"},{n:"Lentes de seguridad",i:"lentes"},{n:"Chaleco reflectivo",i:"chaleco"}
+  ],
+  epc:[
+    {n:"Conos",cant:"3",i:"cono"},
+    {n:"Balizas",cant:"2",i:"baliza"},
+    {n:"Matafuego en cabina",cant:"1",det:"2,5 kg",i:"mata"},
+    {n:"Matafuego en enganche",cant:"",det:"1 de 10 kg o 2 de 5 kg",i:"mata"}
+  ],
+  avisos:[
+    {fecha:"2026-11-20",titulo:"Capacitación virtual del mes",texto:"Seguridad vial en ruta. Sumate desde el celular.",link:"#",ej:true},
+    {fecha:"2026-11-12",titulo:"Novedad operativa",texto:"Ejemplo de aviso: cambio de horario en un punto de carga.",link:"",ej:true}
+  ],
+  videos:[
+    {titulo:"Manejo defensivo",duracion:"8 min",link:"#",ej:true},
+    {titulo:"Cómo usar el Copiloto SIXCO",duracion:"5 min",link:"#",ej:true}
+  ],
+  faq:[
+    {p:"¿Dónde envío el remito?",r:"Respuesta a completar.",ej:true},
+    {p:"¿Qué hago si se corta la ruta?",r:"Respuesta a completar.",ej:true},
+    {p:"¿Dónde puedo descansar?",r:"En los Punto SIXCO habilitados. Mirá la sección En ruta.",ej:true}
+  ],
+  contactos:[
+    {area:"Higiene y Seguridad",rol:"Responsable HYS",horario:"24 hs",numero:"5491100000000",ej:true},
+    {area:"Coordinación",rol:"Coordinación Arenas",horario:"Lunes a sábado",numero:"5491100000000",ej:true},
+    {area:"Grupo oficial SIXCO–YPF",rol:"Canal de comunicados",horario:"",link:"#",ej:true}
+  ]
+};
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ej=o=>o&&o.ej?'<span class="ej">Dato de ejemplo</span>':"";
+const fmtNum=n=>{const d=String(n).replace(/\D/g,"");return d.length>=12?`+${d.slice(0,2)} ${d.slice(2,3)} ${d.slice(3,5)} ${d.slice(5,9)}-${d.slice(9)}`:"+"+d};
+const wa=(num,msg)=>`https://wa.me/${num}${msg?"?text="+encodeURIComponent(msg):""}`;
+const ICON={
+  pin:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>',
+  nav:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-8-8 18-2-8-8-2Z"/></svg>',
+  map:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>',
+  play:'<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+  shield:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>'
+};
+
+/* WhatsApp */
+document.querySelectorAll("[data-wa]").forEach(a=>{const w=DATA.whatsapp[a.dataset.wa];a.href=wa(w.numero,w.mensaje);a.target="_blank";a.rel="noopener"});
+document.querySelectorAll("[data-todo]").forEach(a=>{a.addEventListener("click",e=>{if(a.getAttribute("href")==="#")e.preventDefault()});a.title="Pendiente: se completa con el material final"});
+
+/* Datos rotativos */
+(function(){
+  const box=$("#datos"),dots=$("#dots"),L=DATA.datosRotativos;let i=0;
+  dots.innerHTML=L.map(()=>"<i></i>").join("");
+  const show=()=>{const d=L[i];box.innerHTML=`<div class="cifra">${esc(d.cifra)}</div><div class="txt">${esc(d.texto)}<small>${esc(d.fuente)}${d.ej?" · ejemplo":""}</small></div>`;[...dots.children].forEach((x,k)=>x.classList.toggle("on",k===i))};
+  show();
+  if(!matchMedia("(prefers-reduced-motion: reduce)").matches)setInterval(()=>{i=(i+1)%L.length;show()},4000);
+})();
+
+/* Embebidos: cargan al abrir la página. Si falta el link, se muestra "pendiente". */
+function embedPlaceholder(el,src,label){
+  if(!src){el.innerHTML=`<div class="load"><span class="circle">${ICON.map}</span><b>${esc(label)}</b><small>Pendiente: link de My Maps</small></div>`;return}
+  el.innerHTML=`<div class="load" aria-hidden="true"><span class="circle">${ICON.map}</span><small>Cargando ${esc(label).toLowerCase()}…</small></div><iframe src="${esc(src)}" title="${esc(label)}" allowfullscreen></iframe>`;
+}
+document.querySelectorAll(".embed[data-label]").forEach(el=>embedPlaceholder(el,el.dataset.src,el.dataset.label));
+
+/* Recorridos */
+(function(){
+  const R=DATA.recorridos.filter(r=>r.activo),tabs=$("#tabs"),box=$("#ruta");
+  tabs.innerHTML=R.map((r,k)=>`<button class="tab" role="tab" type="button" aria-selected="${k===0}" data-k="${k}">${esc(r.nombre)}</button>`).join("");
+  const render=k=>{
+    const r=R[k],o=DATA.origenes[r.origen],d=DATA.destinos[r.destino];
+    box.innerHTML=`<div class="card" data-s="${esc(r.nombre+" "+o.nombre+" "+d.nombre+" hoja de ruta recorrido")}"><div class="ruta">
+      <div class="tramo"><div class="rail"><span class="pt"></span></div><div class="body" style="display:grid;gap:8px">
+        <span class="eyebrow">Origen</span><h3>${esc(o.nombre)}</h3><p>${esc(o.localidad)}</p>
+        <div class="demora ${o.demora.nivel}"><i></i><span>Demora en carga</span><b>${esc(o.demora.txt)}</b></div>
+        ${o.turno?`<p style="color:var(--ink);font-size:14px">${esc(o.turno)}</p>`:""}
+        <ul class="cons">${o.cons.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+      </div></div>
+      <div class="tramo"><div class="rail"></div><div class="body" style="display:grid;gap:10px">
+        <span class="eyebrow">Tramo</span>
+        <div class="kmtot">${esc(r.km)} <span>km aprox.</span></div>
+        <div class="embed" id="mapRuta"></div>
+        <div class="btns"><a class="btn sec2" href="${esc(r.mymaps||"#")}" target="_blank" rel="noopener">${ICON.map}Mapa completo</a><a class="btn pri" href="${esc(r.navegar||"#")}" target="_blank" rel="noopener">${ICON.nav}Navegar</a></div>
+        <h4 style="font-size:15px;font-weight:800">A tener en cuenta en este tramo</h4>
+        <ul class="cons alert">${r.cons.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+      </div></div>
+      <div class="tramo"><div class="rail"><span class="pt"></span></div><div class="body" style="display:grid;gap:8px;padding-bottom:0">
+        <span class="eyebrow">Destino</span><h3>${esc(d.nombre)}</h3><p>${esc(d.localidad)}</p>
+        <div class="demora ${d.demora.nivel}"><i></i><span>Demora en descarga</span><b>${esc(d.demora.txt)}</b></div>
+        <ul class="cons">${d.cons.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+      </div></div>
+    </div>${ej(r)}</div>`;
+    embedPlaceholder($("#mapRuta"),r.mymaps,"Mapa del recorrido");
+    [...tabs.children].forEach((t,i)=>t.setAttribute("aria-selected",i===k));
+  };
+  tabs.addEventListener("click",e=>{const t=e.target.closest(".tab");if(t)render(+t.dataset.k)});
+  render(0);
+})();
+
+/* Puntos de carga y descarga · carrusel */
+const ARROW=d=>`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d<0?"m15 5-7 7 7 7":"m9 5 7 7-7 7"}"/></svg>`;
+function puntoCard(o,tipo){
+  return `<div class="card slide" data-s="${esc(o.nombre+" "+o.localidad+" "+tipo+" horario turno demora")}">
+  <div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div style="min-width:0"><h3>${esc(o.nombre)}</h3><p>${esc(o.localidad)}</p></div><span class="pill ${o.estado}">${esc(o.estadoTxt)}</span></div>
+  <div class="demora ${o.demora.nivel}"><i></i><span>Demora · ${esc(o.demora.act)}</span><b>${esc(o.demora.txt)}</b></div>
+  <table class="hor">${o.horarios.map(h=>`<tr><td>${esc(h[0])}</td><td>${esc(h[1])}</td></tr>`).join("")}</table>
+  ${o.franjas.length?`<span class="eyebrow">Franjas de ingreso</span><div class="franjas">${o.franjas.map(f=>`<span>${esc(f)}</span>`).join("")}</div>`:""}
+  ${o.turno?`<p style="color:var(--ink);font-size:14px">${esc(o.turno)}</p>`:""}
+  <a class="btn sec2" href="${esc(o.maps)}" target="_blank" rel="noopener">${ICON.pin}Cómo llegar</a>${ej(o)}</div>`;
+}
+function carousel(el,items,tipo){
+  el.innerHTML=`<div class="car-chips"${items.length<2?" hidden":""} role="group" aria-label="Elegí un punto">${items.map((o,i)=>`<button class="car-chip" type="button" data-i="${i}" aria-pressed="false" title="${esc(o.demora.txt)}"><i class="${o.demora.nivel}"></i>${esc(o.nombre)}</button>`).join("")}</div>
+  <div class="car-track" tabindex="0" aria-label="${esc(tipo)}">${items.map(o=>puntoCard(o,tipo)).join("")}</div>
+  <div class="car-nav"${items.length<2?" hidden":""}><button class="car-btn" type="button" data-d="-1" aria-label="Anterior">${ARROW(-1)}</button><span class="car-count" style="flex:1;text-align:center"></span><button class="car-btn" type="button" data-d="1" aria-label="Siguiente">${ARROW(1)}</button></div>`;
+  const tr=el.querySelector(".car-track"),dots=[...el.querySelectorAll(".car-chip")],cnt=el.querySelector(".car-count"),prev=el.querySelector('[data-d="-1"]'),next=el.querySelector('[data-d="1"]');
+  const step=()=>(tr.firstElementChild?tr.firstElementChild.offsetWidth:tr.clientWidth)+12;
+  const idx=()=>Math.round(tr.scrollLeft/step());
+  const upd=()=>{const i=Math.min(idx(),items.length-1);dots.forEach((d,k)=>d.setAttribute("aria-pressed",k===i));cnt.textContent=`${i+1} / ${items.length}`;prev.disabled=i<=0;next.disabled=i>=items.length-1};
+  const go=i=>tr.scrollTo({left:Math.max(0,Math.min(items.length-1,i))*step(),behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  el.addEventListener("click",e=>{const b=e.target.closest(".car-btn,.car-chip");if(!b)return;if(b.dataset.d)go(idx()+Number(b.dataset.d));else go(Number(b.dataset.i))});
+  let raf;tr.addEventListener("scroll",()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(upd)},{passive:true});
+  addEventListener("resize",upd);upd();
+}
+carousel($("#carCarga"),Object.values(DATA.origenes),"Puntos de carga");
+carousel($("#carDescarga"),Object.values(DATA.destinos),"Puntos de descarga");
+
+/* Clima */
+(function(){
+  const t=$("#climaTabs"),box=$("#climaEmbed"),C=DATA.clima;
+  const src=c=>`https://embed.windy.com/embed2.html?lat=${c.lat}&lon=${c.lon}&detailLat=${c.lat}&detailLon=${c.lon}&zoom=8&level=surface&overlay=wind&product=ecmwf&marker=true&calendar=now&metricWind=km%2Fh&metricTemp=%C2%B0C`;
+  t.innerHTML=C.map((c,k)=>`<button class="tab" role="tab" type="button" aria-selected="${k===0}" data-k="${k}">${esc(c.lugar)}</button>`).join("");
+  const render=k=>{embedPlaceholder(box,src(C[k]),"Clima en "+C[k].lugar);[...t.children].forEach((x,i)=>x.setAttribute("aria-selected",i===k))};
+  t.addEventListener("click",e=>{const b=e.target.closest(".tab");if(b)render(+b.dataset.k)});
+  render(0);
+})();
+
+/* EPP */
+const EPPI={
+  ropa:'<path d="M8.5 3 4 5.5 2.5 10l3 1.2L7 9v12h10V9l1.5 2.2 3-1.2L20 5.5 15.5 3c-.6 1.6-1.9 2.5-3.5 2.5S9.1 4.6 8.5 3Z"/><path d="M12 5.5V21M9 14h-2M17 14h-2"/>',
+  botin:'<path d="M5 3h7v8.5l6.2 2.3A3.6 3.6 0 0 1 21 17.2V19H4V4a1 1 0 0 1 1-1Z"/><path d="M4 16h17M8 7h4M8 10h4"/>',
+  guantes:'<path d="M8 21v-3.5L5.2 13.6A2 2 0 0 1 5 12.7V9a1.5 1.5 0 0 1 3 0v2.5V5a1.5 1.5 0 0 1 3 0v5.5V4a1.5 1.5 0 0 1 3 0v6.5V6a1.5 1.5 0 0 1 3 0v8.2a4 4 0 0 1-1 2.6L15 18v3"/><path d="M7.5 21h8"/>',
+  casco:'<path d="M4 15.5a8 8 0 0 1 16 0"/><path d="M2 15.5h20v2.2H2z"/><path d="M10 8V5.5h4V8M12 5.5v3"/>',
+  lentes:'<path d="M2 11h20"/><path d="M3 11v2.5A3.5 3.5 0 0 0 6.5 17h1A3.5 3.5 0 0 0 11 13.5V11M13 11v2.5a3.5 3.5 0 0 0 3.5 3.5h1a3.5 3.5 0 0 0 3.5-3.5V11"/><path d="M5 7l-1 4M19 7l1 4"/>',
+  chaleco:'<path d="M8 3 5 5v15.5h5.5V12L12 10l1.5 2v8.5H19V5l-3-2-2 4.5h-4Z"/><path d="M5 14.5h5.5M13.5 14.5H19M5 17.5h5.5M13.5 17.5H19"/>',
+  cono:'<path d="M10 3h4l4.5 15h-13Z"/><path d="M3 18h18v3H3z"/><path d="M8.2 9h7.6M7 13.5h10"/>',
+  baliza:'<path d="M12 3 2 20h20Z"/><path d="m12 9.5-5.2 8.5h10.4Z"/>',
+  mata:'<rect x="7.5" y="8" width="8" height="13" rx="3"/><path d="M11.5 8V5.5M9 5.5h5.5l3 2.5M11.5 5.5 9.5 3"/><path d="M7.5 13h8"/>'
+};
+const svgI=k=>`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${EPPI[k]}</svg>`;
+$("#epp").innerHTML=DATA.epp.map(e=>`<div><span class="ic">${svgI(e.i)}</span><span>${esc(e.n)}</span></div>`).join("");
+$("#epc").innerHTML=DATA.epc.map(e=>`<div><span class="ic">${svgI(e.i)}${e.cant?`<span class="qty">x${esc(e.cant)}</span>`:""}</span><span>${esc(e.n)}</span>${e.det?`<small>${esc(e.det)}</small>`:""}</div>`).join("");
+
+/* Avisos */
+(function(){
+  const M=["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+  $("#listaAvisos").innerHTML=DATA.avisos.map(a=>{const [y,m,d]=a.fecha.split("-");return `<div class="card" data-s="${esc(a.titulo+" "+a.texto+" aviso novedad")}"><div class="aviso"><div class="fecha"><b>${+d}</b><small>${M[+m-1]}</small></div><div style="display:grid;gap:6px"><h3>${esc(a.titulo)}</h3><p>${esc(a.texto)}</p>${a.link?`<a class="btn pri" href="${esc(a.link)}" target="_blank" rel="noopener" style="justify-self:start;min-height:44px">Sumarme</a>`:""}${ej(a)}</div></div></div>`}).join("");
+  $("#videos").innerHTML=DATA.videos.map(v=>`<a class="video" href="${esc(v.link)}" target="_blank" rel="noopener"><div class="vt">${ICON.play}</div><div><b style="display:block;font-weight:800;font-size:15px">${esc(v.titulo)}</b><span style="font-size:13px;color:var(--gray);font-weight:600">${esc(v.duracion)} · YouTube${v.ej?" · ejemplo":""}</span></div></a>`).join("");
+})();
+
+/* FAQ */
+$("#faq").innerHTML=DATA.faq.map(f=>`<details data-s="${esc(f.p+" "+f.r)}"><summary>${esc(f.p)}</summary><p>${esc(f.r)}${f.ej?" (ejemplo)":""}</p></details>`).join("");
+
+/* Contactos */
+$("#contactos").innerHTML=DATA.contactos.map(c=>`<div class="card contacto" data-s="${esc(c.area+" "+c.rol+" contacto telefono whatsapp")}">
+  <div class="who"><span class="eyebrow">${esc(c.area)}</span><b>${esc(c.rol)}</b>${c.horario?`<span>${esc(c.horario)}</span>`:""}</div>
+  ${c.numero?`<span class="num">${esc(fmtNum(c.numero))}</span><a class="btn wa" href="${wa(c.numero)}" target="_blank" rel="noopener">Escribir por WhatsApp</a>`:`<a class="btn wa" href="${esc(c.link)}" target="_blank" rel="noopener">Unirme al grupo</a>`}${ej(c)}</div>`).join("");
+
+/* Buscador */
+(function(){
+  const q=$("#q"),no=$("#noresult");
+  const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  q.addEventListener("input",()=>{
+    const v=norm(q.value.trim());let any=false;
+    document.querySelectorAll(".sec").forEach(sec=>{
+      const items=sec.querySelectorAll("[data-s]");let hit=0;
+      items.forEach(it=>{const ok=!v||norm(it.dataset.s+" "+it.textContent).includes(v);it.toggleAttribute("data-hide",!ok);if(ok)hit++});
+      const head=norm(sec.querySelector("h2").textContent).includes(v);
+      if(head&&v)items.forEach(it=>it.removeAttribute("data-hide"));
+      const show=!v||hit>0||head;sec.toggleAttribute("data-hide",!show);if(show)any=true;
+    });
+    no.hidden=any;
+  });
+})();
+
+/* Menú: resalta la sección donde estás parado */
+(function(){
+  const nav=$("#nav"),head=document.querySelector(".head"),links=[...nav.querySelectorAll("a")];
+  const secs=links.map(l=>document.querySelector(l.getAttribute("href"))).filter(Boolean);
+  let lockUntil=0,current=null;
+  const setOn=id=>{
+    if(id===current)return;current=id;
+    links.forEach(l=>{const on=l.getAttribute("href")==="#"+id;l.classList.toggle("on",on);
+      if(on&&nav.scrollWidth>nav.clientWidth+2)nav.scrollTo({left:l.offsetLeft-parseFloat(getComputedStyle(nav).paddingLeft),behavior:"smooth"})});
+  };
+  const pick=()=>{
+    if(Date.now()<lockUntil)return;
+    const y=head.getBoundingClientRect().bottom+40;let id=null;
+    secs.forEach(s=>{if(s.offsetParent!==null&&s.getBoundingClientRect().top<=y)id=s.id});
+    if(id)setOn(id);else{current=null;links.forEach(l=>l.classList.remove("on"))}
+  };
+  links.forEach(l=>l.addEventListener("click",()=>{lockUntil=0;current=null;setOn(l.getAttribute("href").slice(1));lockUntil=Date.now()+1500}));
+  const endCheck=()=>{const st=nav.scrollLeft<=4,en=nav.scrollLeft+nav.clientWidth>=nav.scrollWidth-4;nav.classList.toggle("end",en&&!st);nav.classList.toggle("mid",!st&&!en)};
+  nav.addEventListener("scroll",endCheck,{passive:true});addEventListener("resize",endCheck);endCheck();
+  let raf;addEventListener("scroll",()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(pick)},{passive:true});
+  pick();
+})();
+</script>
+
+</body>
+</html>
