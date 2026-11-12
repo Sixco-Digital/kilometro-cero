@@ -163,7 +163,7 @@ ul.cons.alert li::before{background:var(--urgent)}
 .franjas span{font-size:12.5px;font-weight:700;background:var(--bg);padding:5px 9px;border-radius:7px;font-variant-numeric:tabular-nums}
 
 /* Embebidos que cargan al tocar */
-.embed{position:relative;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,var(--sky-soft),var(--bg));aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;border:2px solid var(--line)}
+.embed{position:relative;border-radius:12px;overflow:hidden;min-height:340px;background:linear-gradient(160deg,var(--sky-soft),var(--bg));aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;border:2px solid var(--line)}
 .embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .embed .load{display:grid;justify-items:center;gap:6px;text-align:center;padding:16px;background:none;border:0;cursor:pointer;width:100%;height:100%;align-content:center}
 .embed .load b{font-size:15px;font-weight:800;color:var(--petrol)}
@@ -293,8 +293,6 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
 <body>
 
 
-<div class="ribbon">MAQUETA · los datos marcados como ejemplo se reemplazan con el material final</div>
-
 <header class="head">
   <div class="wrap">
     <div class="head-row">
@@ -376,9 +374,6 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
       <div id="puntoSixco" class="ps-list"></div>
       <div id="otrosDescansos" style="display:grid;gap:10px"></div>
     </div>
-    <div class="docs" data-docs="En ruta">
-      <a class="doc" href="#" data-todo data-s="planilla de descanso instructivo"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Completá la planilla de descanso</b><span>Instructivo paso a paso</span></div></a>
-    </div>
     <div class="card" data-s="clima ibicuy catrilo catriló añelo anelo viento lluvia">
       <span class="eyebrow">Clima en ruta</span>
       <h3>Revisá el clima antes de salir</h3>
@@ -400,7 +395,6 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
       <span class="eyebrow">EPP obligatorio</span>
       <h3>Bajá del camión siempre con tu EPP</h3>
       <div class="epp" id="epp"></div>
-      <span class="ej">Lista de ejemplo · validar con HYS</span>
     </div>
     <div class="card" data-s="epc conos balizas matafuego matafuegos extintor proteccion colectiva">
       <span class="eyebrow">EPC · Elementos de protección colectiva</span>
@@ -412,15 +406,13 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
   <!-- 5 · Procedimientos -->
   <section class="sec" id="procedimientos">
     <div class="sec-head"><div class="step">5</div><div><h2>Procedimientos</h2><p>Ingreso a planta, verificación y salida.</p></div></div>
-    <div class="docs" data-docs="Procedimientos">
-      <a class="doc" href="#" data-todo data-s="protocolo ingreso planta cantera"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Protocolo general de ingreso</b><span>Documentación y pasos previos</span></div></a>
-    </div>
     <div class="card" data-s="verificacion 360 control unidad camion">
       <span class="eyebrow">Antes de salir</span>
       <h3>Verificación 360°</h3>
       <p>Recorré la unidad completa y registrá el control.</p>
       <a class="btn pri" href="#" data-link="verificacion">Hacer la verificación 360°</a>
     </div>
+    <div class="docs" data-docs="Procedimientos"></div>
     <div class="card" data-s="salida remito estado del viaje copiloto">
       <span class="eyebrow">Al salir de planta</span>
       <h3>Indicá el estado de tu viaje y enviá el remito</h3>
@@ -434,9 +426,8 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
     <div class="sec-head"><div class="step">6</div><div><h2>Avisos y capacitaciones</h2><p>Novedades de la operación y próximos encuentros.</p></div></div>
     <div id="listaAvisos" style="display:grid;gap:10px"></div>
     <div class="card" data-s="capacitaciones videos youtube educacion vial">
-      <span class="eyebrow">Capacitaciones</span>
-      <h3>Videos SIXCO</h3>
-      <div id="videos" style="display:grid;gap:12px"></div>
+      <h3>Capacitaciones</h3>
+            <div id="videos" style="display:grid;gap:12px"></div>
     </div>
   </section>
 
@@ -449,17 +440,12 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
   <!-- 8 · Inducción -->
   <section class="sec" id="induccion">
     <div class="sec-head"><div class="step">8</div><div><h2>Inducción nuevos choferes</h2><p>Si es tu primer viaje con SIXCO, empezá acá.</p></div></div>
-    <div class="card" data-s="induccion nuevo chofer primer viaje copiloto instructivo">
+    <div class="card" data-s="induccion nuevo chofer primer viaje material lectura grupo">
       <ol class="pasos">
-        <li><div><b>Conocé la operación</b><span>Material de inducción Arenas–YPF.</span></div></li>
-        <li><div><b>Aprendé a usar el Copiloto</b><span>Instructivo para choferes.</span></div></li>
-        <li><div><b>Sumate al grupo oficial</b><span>Comunicados de SIXCO–YPF por WhatsApp. <a href="#" data-link="grupo">Unirme al grupo</a></span></div></li>
+        <li><div><b>Leé el material de inducción</b><span>Todo lo que tenés que saber de la operación YPF.</span></div></li>
+        <li><div><b>Sumate al grupo oficial</b><span>Comunicados de SIXCO–YPF por WhatsApp.</span></div></li>
       </ol>
-      <span class="ej">Pasos de ejemplo</span>
-    </div>
-    <div class="docs">
-      <a class="doc" href="#" data-link="induccion" data-s="induccion operacion ypf"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Inducción YPF</b><span>Material de inducción</span></div></a>
-      <a class="doc" href="#" data-todo data-s="instructivo copiloto choferes"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Instructivo Copiloto SIXCO</b><span>Paso a paso</span></div></a>
+      <div class="btns"><a class="btn pri" href="#" data-link="induccion">Material de lectura</a><a class="btn wa" href="#" data-link="grupo">Unirme al grupo</a></div>
     </div>
   </section>
 
@@ -523,7 +509,7 @@ const DATA={
   faq:[{"p": "Tengo una demora en mi viaje.", "r": "Comunicate con HyS detallando el motivo: +54 9 11 3814-7785. Te vamos a pedir los datos del viaje."}, {"p": "Quiero avisar de un choque en la ruta, rutas en mal estado o animales sueltos.", "r": "Gracias por estar atento. Enviá el aviso a HyS SIXCO: +54 9 11 3814-7785. Si estás involucrado o hay riesgo inmediato, comunicate con la Guardia SIXCO: +54 9 11 3076-4121."}, {"p": "Se me borró el QR para acreditar la presencia en Punto SIXCO.", "r": "Comunicate con HyS para que te lo vuelvan a enviar: +54 9 11 3814-7785."}, {"p": "Punto SIXCO: ¿dónde están, para qué sirven y cómo uso los beneficios?", "r": "Hay dos Puntos SIXCO: en la YPF El Cruce de Catriló y en la YPF El Parador de Mercedes. En ambos pedile al playero que lea tu QR personal (si no lo tenés, pedilo a HyS). Así queda registrada la evidencia de tu descanso. En el Punto SIXCO Catriló además podés usar los beneficios de la Sala Exclusiva SIXCO para choferes.\n📍RN5, Km 525.3, L6330 Catriló, La Pampa. Cómo llegar: https://maps.app.goo.gl/VFxpUQnw5zVtb9N19\n📍RN5 km 107, B6600 Mercedes, Provincia de Buenos Aires. Maps: https://maps.app.goo.gl/xGzZMQc21RV2nE3L8"}, {"p": "¿Dónde envío el remito?", "r": "Mandá una foto del remito cuando cargues cuando descargues, al +54 9 11 7637-6272."}, {"p": "¿Cuáles son los elementos de protección personal (EPP) obligatorios para viajar?", "r": "Casco, gafas, guantes, botines, ropa de manga larga y chaleco."}, {"p": "¿Cuántos extintores tengo que tener?", "r": "Uno de 10 kg en el equipo (o dos de 5 kg) y uno de 2,5 kg en la cabina."}, {"p": "¿Cómo sé donde cargar?", "r": "El equipo de Coordinación envía la Orden de Carga al transporte y al chofer le llega un mensaje en Whatsapp desde el COPILOTO SIXCO. Allí se encuentran todos los detalles."}, {"p": "Necesito más saldo para viajar. YPF Ruta.", "r": "Si el viaje está confirmado, enviá los datos del ruteo por WhatsApp +54 9 11 7637-6272 y te respondemos a la brevedad. \nSi estás fuera de horario de atención y no podés seguir viaje sin combustible, comunicate con la Guardia SIXCO: +54 9 11 3076-4121 (urgencias)."}, {"p": "¿Cuánto demora la acreditación de saldo YER gasoil?", "r": "La acreditación suele demorar entre 40 y 50 minutos. Si no lo ves reflejado, avisá en el acto."}, {"p": "Me asignaron saldo y en la app no me figura actualizado.", "r": "Puede ser una caída del sistema."}],
   puntoSixco:[{"nombre": "Punto SIXCO Catriló", "ubicacion": "RN5, Km 525.3, L6330 Catriló, La Pampa", "maps": "https://maps.app.goo.gl/TLAfyWkmeisKKVJr5", "servicios": ["Duchas y baño exclusivos", "Estacionamiento seguro y amplio", "Combos para la flota SIXCO", "Sala de estar", "Microondas", "Heladera", "Cocina"]}, {"nombre": "Punto SIXCO Mercedes", "ubicacion": "RN5 km 107, B6600 Mercedes, Provincia de Buenos Aires", "maps": "https://maps.app.goo.gl/3HS7NKvzv5u85MFz7", "servicios": ["Duchas y baño", "Estacionamiento seguro y amplio", "Sala de estar", "Microondas", "Heladera"]}],
   otrosDescansos:{"nombre": "Otros descansos habilitados", "mid": "1A_-16e22iWutyMZfqwtf_ox8RWOGGIg"},
-  documentos:[{"seccion": "Seguridad", "titulo": "Rol de llamado SIXCO", "desc": "A quién llamar y en qué orden", "archivo": "docs/rol-de-llamado.png", "thumb": "assets/thumbs/rol-de-llamado.webp", "tipo": "IMG"}, {"seccion": "Políticas", "titulo": "Política integrada de gestión", "desc": "Calidad, seguridad y salud", "archivo": "docs/politica-calidad-seguridad-vial.pdf", "thumb": "assets/thumbs/politica-calidad-seguridad-vial.webp", "tipo": "PDF"}, {"seccion": "Políticas", "titulo": "Política alcohol y drogas", "desc": "Tolerancia CERO al consumo de alcohol, somníferos, estupefacientes, mascado de COCA o bebidas energizantes. Para más detalles, leé la política completa.", "archivo": "docs/politica-alcohol-drogas.pdf", "thumb": "assets/thumbs/politica-alcohol-drogas.webp", "tipo": "PDF"}, {"seccion": "Políticas", "titulo": "Política de Sustentabilidad", "desc": "", "archivo": "docs/politica-sustentabilidad.pdf", "thumb": "assets/thumbs/politica-sustentabilidad.webp", "tipo": "PDF"}],
+  documentos:[{"seccion": "Seguridad", "titulo": "Rol de llamado SIXCO", "desc": "A quién llamar y en qué orden", "archivo": "docs/rol-de-llamado.webp", "thumb": "assets/thumbs/rol-de-llamado.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Descanso para un viaje seguro", "desc": "Frená cada 3.45 h. Puntos SIXCO Mercedes y Catriló", "archivo": "docs/descanso-punto-sixco.webp", "thumb": "assets/thumbs/descanso-punto-sixco.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Pautas de descanso", "desc": "15 min cada 3.45 h, jornada máx. 12 h, 8 h de descanso nocturno", "archivo": "docs/pautas-de-descanso.webp", "thumb": "assets/thumbs/pautas-de-descanso.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "¿Cómo prevenir un golpe de calor?", "desc": "Prevención, síntomas y qué hacer", "archivo": "docs/golpe-de-calor.webp", "thumb": "assets/thumbs/golpe-de-calor.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Indicaciones para operar de manera segura", "desc": "EPP en las instalaciones y control de faros", "archivo": "docs/indicaciones-operar-seguro.webp", "thumb": "assets/thumbs/indicaciones-operar-seguro.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Política de alcohol y droga", "desc": "Conducción responsable", "archivo": "docs/politica-alcohol-droga-placa.webp", "thumb": "assets/thumbs/politica-alcohol-droga-placa.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Sixco Tips 1", "desc": "Luces bajas, señalizar maniobras y puntos de riesgo", "archivo": "docs/sixco-tips-1.webp", "thumb": "assets/thumbs/sixco-tips-1.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Sixco Tips 2", "desc": "Infusiones calientes, no fumar y residuos", "archivo": "docs/sixco-tips-2.webp", "thumb": "assets/thumbs/sixco-tips-2.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Sixco Tips 3", "desc": "Inflamables, calentadores y objetos sueltos", "archivo": "docs/sixco-tips-3.webp", "thumb": "assets/thumbs/sixco-tips-3.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Sixco Tips 4", "desc": "Pasajeros, caja de carga y conducción a terceros", "archivo": "docs/sixco-tips-4.webp", "thumb": "assets/thumbs/sixco-tips-4.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Sixco Tips 5", "desc": "Descanso, paradas, planificación y celular", "archivo": "docs/sixco-tips-5.webp", "thumb": "assets/thumbs/sixco-tips-5.webp", "tipo": "IMG"}, {"seccion": "Seguridad", "titulo": "Sixco Tips 6", "desc": "Planificación, puntos de riesgo y celular", "archivo": "docs/sixco-tips-6.webp", "thumb": "assets/thumbs/sixco-tips-6.webp", "tipo": "IMG"}, {"seccion": "Procedimientos", "titulo": "Completá la planilla de descanso", "desc": "Planilla de descanso YPF", "archivo": "docs/planilla-descanso-ypf.pdf", "thumb": "assets/thumbs/planilla-descanso-ypf.webp", "tipo": "PDF"}, {"seccion": "Procedimientos", "titulo": "Procedimiento de carga YPF", "desc": "Lo que sí y lo que no tenés que hacer", "archivo": "docs/procedimiento-de-carga.webp", "thumb": "assets/thumbs/procedimiento-de-carga.webp", "tipo": "IMG"}, {"seccion": "Procedimientos", "titulo": "Desenlonado correcto para la carga", "desc": "Desde el suelo o con arnés de seguridad", "archivo": "docs/desenlonado-correcto.webp", "thumb": "assets/thumbs/desenlonado-correcto.webp", "tipo": "IMG"}, {"seccion": "Procedimientos", "titulo": "Limpieza de bateas", "desc": "Recordá limpiar la batea antes de cargar", "archivo": "docs/limpieza-de-bateas.webp", "thumb": "assets/thumbs/limpieza-de-bateas.webp", "tipo": "IMG"}, {"seccion": "Procedimientos", "titulo": "Detención de tareas ante condiciones inseguras", "desc": "Detené la tarea e informá a HYS", "archivo": "docs/detencion-de-tareas.webp", "thumb": "assets/thumbs/detencion-de-tareas.webp", "tipo": "IMG"}, {"seccion": "Políticas", "titulo": "Política integrada de gestión", "desc": "Calidad, seguridad y salud", "archivo": "docs/politica-calidad-seguridad-vial.pdf", "thumb": "assets/thumbs/politica-calidad-seguridad-vial.webp", "tipo": "PDF"}, {"seccion": "Políticas", "titulo": "Política alcohol y drogas", "desc": "Tolerancia CERO al consumo de alcohol, somníferos, estupefacientes, mascado de COCA o bebidas energizantes. Para más detalles, leé la política completa.", "archivo": "docs/politica-alcohol-drogas.pdf", "thumb": "assets/thumbs/politica-alcohol-drogas.webp", "tipo": "PDF"}, {"seccion": "Políticas", "titulo": "Política de Sustentabilidad", "desc": "", "archivo": "docs/politica-sustentabilidad.pdf", "thumb": "assets/thumbs/politica-sustentabilidad.webp", "tipo": "PDF"}],
   links:{"verificacion": "https://docs.google.com/forms/d/e/1FAIpQLSds2tLB6CRqqZNtBKhY_eAK9gCETkkGUrfZdcn2D5uhg5c7pw/viewform?usp=sharing&ouid=111424613538475531618", "grupo": "https://chat.whatsapp.com/KhSCSbvYkuw0wrrDzRJnKW", "induccion": "https://drive.google.com/file/d/1jlZp3FmRA3R8Q6VIr5HsRhVfD0llk8Ib/view?usp=sharing"},
   contactos:[{"area": "Higiene y Seguridad", "rol": "Responsable HYS", "horario": "24 hs", "numero": "5491138147785"}, {"area": "Coordinación YPF", "rol": "Coordinación Arenas", "horario": "24 hs", "numero": "5491138150616"}, {"area": "Copiloto Sixco", "rol": "Copiloto Sixco", "horario": "24 hs", "numero": "5491138153648"}, {"area": "Grupo oficial SIXCO–YPF", "rol": "Canal de comunicados", "horario": "", "link": "https://chat.whatsapp.com/KhSCSbvYkuw0wrrDzRJnKW"}]
 };
@@ -540,6 +526,7 @@ const ICON={
   pin:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>',
   nav:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-8-8 18-2-8-8-2Z"/></svg>',
   map:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>',
+  doc:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>',
   play:'<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
   shield:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>'
 };
@@ -674,7 +661,7 @@ if(DATA.otrosDescansos){const o=DATA.otrosDescansos;$("#otrosDescansos").innerHT
   const M=["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
   const hoy=new Date().toISOString().slice(0,10);
   $("#listaAvisos").innerHTML=DATA.avisos.filter(a=>!a.hasta||a.hasta>=hoy).map(a=>{const [y,m,d]=a.fecha.split("-");return `<div class="card" data-s="${esc(a.titulo+" "+a.texto+" aviso novedad")}"><div class="aviso"><div class="fecha"><b>${+d}</b><small>${M[+m-1]}</small></div><div style="display:grid;gap:6px"><h3>${esc(a.titulo)}</h3><p>${esc(a.texto)}</p>${a.link?`<a class="btn pri" href="${esc(a.link)}" target="_blank" rel="noopener" style="justify-self:start;min-height:44px">Sumarme</a>`:""}${ej(a)}</div></div></div>`}).join("");
-  $("#videos").innerHTML=DATA.videos.map(v=>`<a class="video" href="${esc(v.link)}" target="_blank" rel="noopener"><div class="vt">${ICON.play}</div><div><b style="display:block;font-weight:800;font-size:15px">${esc(v.titulo)}</b><span style="font-size:13px;color:var(--gray);font-weight:600">${[v.duracion,/youtu/.test(v.link)?"YouTube":/drive\.google/.test(v.link)?"Google Drive":""].filter(Boolean).map(esc).join(" · ")}</span></div></a>`).join("");
+  $("#videos").innerHTML=DATA.videos.map(v=>`<a class="video" href="${esc(v.link)}" target="_blank" rel="noopener"><div class="vt">${/youtu/.test(v.link)?ICON.play:ICON.doc}</div><div><b style="display:block;font-weight:800;font-size:15px">${esc(v.titulo)}</b><span style="font-size:13px;color:var(--gray);font-weight:600">${[v.duracion,/youtu/.test(v.link)?"YouTube":/drive\.google/.test(v.link)?"Google Drive":""].filter(Boolean).map(esc).join(" · ")}</span></div></a>`).join("");
 })();
 
 /* FAQ */
