@@ -274,6 +274,17 @@ footer b{font-size:16px;font-weight:800}
 .embed .load{position:absolute;inset:0}
 .hor-txt{display:grid;gap:4px;background:var(--bg);border-radius:12px;padding:10px 12px}
 .hor-txt b{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.thumb.photo{padding:0;background:#fff}
+.thumb.photo::before{display:none}
+.thumb.photo img{width:100%;height:100%;object-fit:cover;object-position:top}
+.ps-list{display:grid;gap:10px}
+.ps{display:grid;gap:8px;background:var(--bg);border-radius:12px;padding:12px}
+.ps b{font-size:16px;font-weight:800}
+.ps-ub{font-size:13.5px;color:var(--gray);font-weight:600}
+.ps .franjas span{background:var(--surface)}
+.txt.msg{font-size:16px;font-weight:700;color:#231F20}
+.datos .cifra svg{width:34px;height:34px}
+details p a{color:var(--petrol);font-weight:700;word-break:break-all}
 [data-hide]{display:none!important}
 @media (min-width:760px){.hero .wrap{max-width:980px;padding-block:40px 48px;gap:24px}.hero-head{grid-template-areas:"mojon txt hys";grid-template-columns:auto 1fr auto;gap:22px;align-items:center}.mojon{width:72px;padding:15px 0 11px}.mojon strong{font-size:38px}.hero .bajada{white-space:nowrap}.hero-hys{width:150px}.hero-hys img{width:84px;height:84px}.hero-hys small{font-size:11.5px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -359,14 +370,13 @@ footer b{font-size:16px;font-weight:800}
   <!-- 3 · En ruta -->
   <section class="sec" id="en-ruta">
     <div class="sec-head"><div class="step">3</div><div><h2>En ruta</h2><p>Descansos, planilla y clima.</p></div></div>
-    <div class="card" data-s="punto sixco descanso descansos parada habilitada">
+    <div class="card" data-s="punto sixco descanso descansos parada habilitada catrilo mercedes">
       <span class="eyebrow">Punto SIXCO</span>
       <h3>Descansos habilitados en ruta</h3>
-      <p>Paradas habilitadas para descansar, con servicios. Planificá tus descansos antes de salir.</p>
-      <div class="embed" data-src="" data-label="Mapa de Punto SIXCO"></div>
-      <div class="btns"><a class="btn sec2" href="#" data-todo>Ver mapa completo</a><a class="btn pri" href="#" data-todo>Ir al más cercano</a></div>
+      <div id="puntoSixco" class="ps-list"></div>
+      <div id="otrosDescansos" style="display:grid;gap:10px"></div>
     </div>
-    <div class="docs">
+    <div class="docs" data-docs="En ruta">
       <a class="doc" href="#" data-todo data-s="planilla de descanso instructivo"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Completá la planilla de descanso</b><span>Instructivo paso a paso</span></div></a>
     </div>
     <div class="card" data-s="clima ibicuy catrilo catriló añelo anelo viento lluvia">
@@ -381,12 +391,10 @@ footer b{font-size:16px;font-weight:800}
   <section class="sec" id="seguridad">
     <div class="sec-head"><div class="step">4</div><div><h2>Seguridad</h2><p>Qué hacer ante una emergencia y cómo prevenir.</p></div></div>
     <div class="card" data-s="hys higiene seguridad contacto responsable emergencia">
-      <div class="hys-row"><img src="assets/sello-hys.webp" alt="Sello HYS" width="64" height="64"><div><span class="eyebrow">Higiene y Seguridad</span><h3>Nombre del responsable</h3><p>Lunes a domingo · 24 hs</p></div></div>
-      <span class="ej">Dato de ejemplo</span>
+      <div class="hys-row"><img src="assets/sello-hys.webp" alt="Sello HYS" width="64" height="64"><div><span class="eyebrow">Higiene y Seguridad</span><h3 id="hysRol">Responsable HYS</h3><p id="hysHor"></p><span class="num" id="hysNum"></span></div></div>
       <div class="btns"><a class="btn wa" data-wa="hys" href="#">Reportar incidencia</a><a class="btn sec2" href="#contacto">Ver contactos</a></div>
     </div>
-    <div class="docs">
-      <a class="doc" href="#" data-todo data-s="rol de llamado emergencia accidente siniestro"><div class="thumb img"><i></i><i></i><i></i><i></i><span class="type">IMG</span></div><div class="meta"><b>Rol de llamado SIXCO</b><span>A quién llamar y en qué orden</span></div></a>
+    <div class="docs" data-docs="Seguridad">
       <a class="doc" href="#" data-todo data-s="clima adverso lluvia niebla viento manejo"><div class="thumb img"><i></i><i></i><i></i><i></i><span class="type">IMG</span></div><div class="meta"><b>Manejo en clima adverso</b><span>Lluvia, niebla y viento</span></div></a>
     </div>
     <div class="card" data-s="epp elementos proteccion casco botines guantes lentes chaleco">
@@ -405,14 +413,14 @@ footer b{font-size:16px;font-weight:800}
   <!-- 5 · Procedimientos -->
   <section class="sec" id="procedimientos">
     <div class="sec-head"><div class="step">5</div><div><h2>Procedimientos</h2><p>Ingreso a planta, verificación y salida.</p></div></div>
-    <div class="docs">
+    <div class="docs" data-docs="Procedimientos">
       <a class="doc" href="#" data-todo data-s="protocolo ingreso planta cantera"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Protocolo general de ingreso</b><span>Documentación y pasos previos</span></div></a>
     </div>
     <div class="card" data-s="verificacion 360 control unidad camion">
       <span class="eyebrow">Antes de salir</span>
       <h3>Verificación 360°</h3>
       <p>Recorré la unidad completa y registrá el control.</p>
-      <a class="btn pri" href="#" data-todo>Hacer la verificación 360°</a>
+      <a class="btn pri" href="#" data-link="verificacion">Hacer la verificación 360°</a>
     </div>
     <div class="card" data-s="salida remito estado del viaje copiloto">
       <span class="eyebrow">Al salir de planta</span>
@@ -436,10 +444,7 @@ footer b{font-size:16px;font-weight:800}
   <!-- 7 · Políticas -->
   <section class="sec" id="politicas">
     <div class="sec-head"><div class="step">7</div><div><h2>Políticas</h2><p>Documentos vigentes de la operación.</p></div></div>
-    <div class="docs">
-      <a class="doc" href="#" data-todo data-s="politica integrada gestion calidad seguridad iso"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Política integrada de gestión</b><span>Calidad, seguridad y salud</span></div></a>
-      <a class="doc" href="#" data-todo data-s="politica alcohol drogas tolerancia cero"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Alcohol y drogas</b><span>Tolerancia cero</span></div></a>
-    </div>
+    <div class="docs" data-docs="Políticas"></div>
   </section>
 
   <!-- 8 · Inducción -->
@@ -449,12 +454,12 @@ footer b{font-size:16px;font-weight:800}
       <ol class="pasos">
         <li><div><b>Conocé la operación</b><span>Material de inducción Arenas–YPF.</span></div></li>
         <li><div><b>Aprendé a usar el Copiloto</b><span>Instructivo para choferes.</span></div></li>
-        <li><div><b>Sumate al grupo oficial</b><span>Comunicados de SIXCO–YPF por WhatsApp.</span></div></li>
+        <li><div><b>Sumate al grupo oficial</b><span>Comunicados de SIXCO–YPF por WhatsApp. <a href="#" data-link="grupo">Unirme al grupo</a></span></div></li>
       </ol>
       <span class="ej">Pasos de ejemplo</span>
     </div>
     <div class="docs">
-      <a class="doc" href="#" data-todo data-s="induccion operacion"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Inducción a la operación</b><span>Arenas–YPF</span></div></a>
+      <a class="doc" href="#" data-link="induccion" data-s="induccion operacion ypf"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Inducción YPF</b><span>Material de inducción</span></div></a>
       <a class="doc" href="#" data-todo data-s="instructivo copiloto choferes"><div class="thumb"><i></i><i></i><i></i><i></i><i></i><span class="type">PDF</span></div><div class="meta"><b>Instructivo Copiloto SIXCO</b><span>Paso a paso</span></div></a>
     </div>
   </section>
@@ -490,23 +495,15 @@ footer b{font-size:16px;font-weight:800}
 
 <script>
 /* ===== DATOS =====
-   En la versión final esto se lee del Google Sheets (una pestaña por bloque).
-   Todo lo marcado "ej: true" es de ejemplo. */
+   Fuente: planilla "Kilómetro Cero – Datos" (Drive) + export de rutas de la plataforma.
+   Lo marcado "ej: true" o data-todo sigue pendiente. */
 const DATA={
-  whatsapp:{
-    hys:{numero:"5491100000000",mensaje:"IMPORTANTE. Tuve un incidente durante el viaje.\nDominio: \nChofer: \nMotivo: "},
-    copiloto:{numero:"5491100000000",mensaje:"Hola Copiloto, quiero indicar el estado de mi viaje."}
-  },
-  datosRotativos:[
-    {cifra:"0%",texto:"Incidencias en la operación",fuente:"Período a definir",ej:true},
-    {cifra:"3.000",texto:"Descansos en Punto SIXCO",fuente:"Período a definir",ej:true},
-    {cifra:"+100",texto:"Unidades en la operación Arenas",fuente:"Dato a validar",ej:true},
-    {cifra:"24/7",texto:"Monitoreo y guardia HYS",fuente:"Dato a validar",ej:true}
-  ],
+  whatsapp:{"hys": {"numero": "5491138147785", "mensaje": "IMPORTANTE. Tuve un incidente durante el viaje.\nDominio:\nChofer:\nMotivo:"}, "copiloto": {"numero": "5491138153648", "mensaje": "Hola Copiloto, quiero indicar el estado de mi viaje."}},
+  datosRotativos:[{"cifra": "0%", "texto": "Incidencias en la operación", "fuente": "En 2026"}, {"cifra": "5.518", "texto": "Descansos en Punto SIXCO", "fuente": "Desde febrero 2024"}, {"cifra": "100%", "texto": "Flota capacitada", "fuente": ""}, {"cifra": "", "texto": "Recordá usar los EPP correspondientes.", "fuente": ""}, {"cifra": "", "texto": "¡Gracias por sumarte a la capacitación de noviembre!", "fuente": ""}, {"cifra": "3.583", "texto": "Combos de comida entregados", "fuente": "2024-2026"}],
   /* Origen: export de la plataforma (Rutas_1.csv). Solo datos del export. */
   origenes:{"cantera-el-mangrullo": {"nombre": "Cantera El Mangrullo", "localidad": "Ibicuy", "maps": "https://maps.app.goo.gl/zengEqTe69vjbWTv7", "horario": "Lunes a Domingo 24hs continuas"}, "arenera-del-arroyo": {"nombre": "Arenera del Arroyo", "localidad": "Cilio", "maps": "https://maps.app.goo.gl/UDnQeeBmVLkcjFD4A", "horario": "Lun-Vie 07:00-18:00 hs | Sáb 07:00-12:00 hs"}, "arenera-buenos-aires-norte": {"nombre": "Arenera Buenos Aires Norte", "localidad": "San Pedro", "maps": "https://maps.app.goo.gl/Ux9V9okSdx5ARUHeA", "horario": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0"}, "arenas-santa-rosa": {"nombre": "Arenas Santa Rosa", "localidad": "Santa Rosa (Santa Fe)", "maps": "https://maps.app.goo.gl/vvE5EnhaqgHcqTKDA?g_st=aw", "horario": "Lunes a Viernes: 07:00 a 18:00hs."}},
   destinos:{"planta-arenas-ypf-anelo": {"nombre": "Planta Arenas YPF Añelo", "localidad": "Añelo, Neuquén", "maps": "https://maps.app.goo.gl/EtaMAZscksFsrxNX7", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-laje46": {"nombre": "Pozo LAJE46", "localidad": "", "maps": "https://maps.app.goo.gl/gG7ayi6tWFYTUja59", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-elg8-2": {"nombre": "Pozo ELG8-2", "localidad": "", "maps": "https://www.google.com/maps/d/edit?mid=1GKiXek6eQXwEEMOdOrGUaP-XiS8gRZs&usp=sharing", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-elg5-2": {"nombre": "Pozo ELG5-2", "localidad": "", "maps": "https://www.google.com/maps/d/edit?mid=1GKiXek6eQXwEEMOdOrGUaP-XiS8gRZs&usp=sharing", "horario": "Lunes a Domingo 24hs continuas"}},
-  recorridos:[{"id": "mangrullo-anelo", "nombre": "Mangrullo → Añelo", "origen": "cantera-el-mangrullo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun a dom 24:00hs", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "cilio-anelo", "nombre": "Cilio → Añelo", "origen": "arenera-del-arroyo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun-Vie 07:00-18:00 hs | Sáb 07:00-12:00 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "mangrullo-laje46", "nombre": "Mangrullo → LAJE46", "origen": "cantera-el-mangrullo", "destino": "pozo-laje46", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "mangrullo-elg8-2", "nombre": "Mangrullo → ELG8-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg8-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "mangrullo-elg5-2", "nombre": "Mangrullo → ELG5-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg5-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "sanpedro-laje46", "nombre": "San Pedro → LAJE46", "origen": "arenera-buenos-aires-norte", "destino": "pozo-laje46", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "sanpedro-anelo", "nombre": "San Pedro → Añelo", "origen": "arenera-buenos-aires-norte", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun 6:00 a Sáb 13 hs | Dom 14 a 22 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "san-pedro-elg5-2", "nombre": "San Pedro → ELG5-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg5-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "san-pedro-elg8-2", "nombre": "San Pedro → ELG8-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg8-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "santa-rosa-anelo", "nombre": "Santa Rosa → Añelo", "origen": "arenas-santa-rosa", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lunes a Viernes: 07:00 a 18:00hs.", "horarioDescarga": "Lunes a Domingo 24hs continuas"}],
+  recorridos:[{"id": "mangrullo-anelo", "nombre": "Mangrullo → Añelo", "origen": "cantera-el-mangrullo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun a dom 24:00hs", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "11mKOg930Tllb-8cZPcTorpBaNPOKA9k", "activo": true}, {"id": "cilio-anelo", "nombre": "Cilio → Añelo", "origen": "arenera-del-arroyo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun-Vie 07:00-18:00 hs | Sáb 07:00-12:00 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1W_ZvBNGhcHEw-BY5rudBSxPppzKzuvs", "activo": true}, {"id": "mangrullo-laje46", "nombre": "Mangrullo → LAJE46", "origen": "cantera-el-mangrullo", "destino": "pozo-laje46", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "mangrullo-elg8-2", "nombre": "Mangrullo → ELG8-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg8-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1TInpsPuZGe8y00TX1URd-xvOEBIPGk0", "activo": true}, {"id": "mangrullo-elg5-2", "nombre": "Mangrullo → ELG5-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg5-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1TInpsPuZGe8y00TX1URd-xvOEBIPGk0", "activo": true}, {"id": "sanpedro-laje46", "nombre": "San Pedro → LAJE46", "origen": "arenera-buenos-aires-norte", "destino": "pozo-laje46", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "sanpedro-anelo", "nombre": "San Pedro → Añelo", "origen": "arenera-buenos-aires-norte", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun 6:00 a Sáb 13 hs | Dom 14 a 22 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1B5fUIKxdjxLGNPoA_fHjuCbJUQzf-7o", "activo": false}, {"id": "san-pedro-elg5-2", "nombre": "San Pedro → ELG5-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg5-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1VCxu-GZKk_VZUvtj2IVh5oq3vm8xKy8", "activo": true}, {"id": "san-pedro-elg8-2", "nombre": "San Pedro → ELG8-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg8-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1VCxu-GZKk_VZUvtj2IVh5oq3vm8xKy8", "activo": true}, {"id": "santa-rosa-anelo", "nombre": "Santa Rosa → Añelo", "origen": "arenas-santa-rosa", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lunes a Viernes: 07:00 a 18:00hs.", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1xOtvsm9o_IxnoWbJZOjoMEIJdJLr2e8", "activo": true}],
   clima:[
     {lugar:"Ibicuy",lat:-33.7267,lon:-59.1811},
     {lugar:"Catriló",lat:-36.4067,lon:-63.4225},
@@ -522,30 +519,23 @@ const DATA={
     {n:"Matafuego en cabina",cant:"1",det:"2,5 kg",i:"mata"},
     {n:"Matafuego en enganche",cant:"",det:"1 de 10 kg o 2 de 5 kg",i:"mata"}
   ],
-  avisos:[
-    {fecha:"2026-11-20",titulo:"Capacitación virtual del mes",texto:"Seguridad vial en ruta. Sumate desde el celular.",link:"#",ej:true},
-    {fecha:"2026-11-12",titulo:"Novedad operativa",texto:"Ejemplo de aviso: cambio de horario en un punto de carga.",link:"",ej:true}
-  ],
-  videos:[
-    {titulo:"Manejo defensivo",duracion:"8 min",link:"#",ej:true},
-    {titulo:"Cómo usar el Copiloto SIXCO",duracion:"5 min",link:"#",ej:true}
-  ],
-  faq:[
-    {p:"¿Dónde envío el remito?",r:"Respuesta a completar.",ej:true},
-    {p:"¿Qué hago si se corta la ruta?",r:"Respuesta a completar.",ej:true},
-    {p:"¿Dónde puedo descansar?",r:"En los Punto SIXCO habilitados. Mirá la sección En ruta.",ej:true}
-  ],
-  contactos:[
-    {area:"Higiene y Seguridad",rol:"Responsable HYS",horario:"24 hs",numero:"5491100000000",ej:true},
-    {area:"Coordinación",rol:"Coordinación Arenas",horario:"Lunes a sábado",numero:"5491100000000",ej:true},
-    {area:"Grupo oficial SIXCO–YPF",rol:"Canal de comunicados",horario:"",link:"#",ej:true}
-  ]
+  avisos:[{"fecha": "2026-11-20", "titulo": "Trivia SIXCO: recordá completar las 5 preguntas del mes.", "texto": "Seguridad vial en ruta. Lleva 5min.", "link": "", "hasta": "2026-11-21"}],
+  videos:[{"titulo": "Inducción YPF", "duracion": "", "link": "https://drive.google.com/file/d/1jlZp3FmRA3R8Q6VIr5HsRhVfD0llk8Ib/view?usp=sharing"}],
+  faq:[{"p": "Tengo una demora en mi viaje.", "r": "Comunicate con HyS detallando el motivo: +54 9 11 3814-7785. Te vamos a pedir los datos del viaje."}, {"p": "Quiero avisar de un choque en la ruta, rutas en mal estado o animales sueltos.", "r": "Gracias por estar atento. Enviá el aviso a HyS SIXCO: +54 9 11 3814-7785. Si estás involucrado o hay riesgo inmediato, comunicate con la Guardia SIXCO: +54 9 11 3076-4121."}, {"p": "Se me borró el QR para acreditar la presencia en Punto SIXCO.", "r": "Comunicate con HyS para que te lo vuelvan a enviar: +54 9 11 3814-7785."}, {"p": "Punto SIXCO: ¿dónde están, para qué sirven y cómo uso los beneficios?", "r": "Hay dos Puntos SIXCO: en la YPF El Cruce de Catriló y en la YPF El Parador de Mercedes. En ambos pedile al playero que lea tu QR personal (si no lo tenés, pedilo a HyS). Así queda registrada la evidencia de tu descanso. En el Punto SIXCO Catriló además podés usar los beneficios de la Sala Exclusiva SIXCO para choferes.\n📍RN5, Km 525.3, L6330 Catriló, La Pampa. Cómo llegar: https://maps.app.goo.gl/VFxpUQnw5zVtb9N19\n📍RN5 km 107, B6600 Mercedes, Provincia de Buenos Aires. Maps: https://maps.app.goo.gl/xGzZMQc21RV2nE3L8"}, {"p": "¿Dónde envío el remito?", "r": "Mandá una foto del remito cuando cargues cuando descargues, al +54 9 11 7637-6272."}, {"p": "¿Cuáles son los elementos de protección personal (EPP) obligatorios para viajar?", "r": "Casco, gafas, guantes, botines, ropa de manga larga y chaleco."}, {"p": "¿Cuántos extintores tengo que tener?", "r": "Uno de 10 kg en el equipo (o dos de 5 kg) y uno de 2,5 kg en la cabina."}, {"p": "¿Cómo sé donde cargar?", "r": "El equipo de Coordinación envía la Orden de Carga al transporte y al chofer le llega un mensaje en Whatsapp desde el COPILOTO SIXCO. Allí se encuentran todos los detalles."}, {"p": "Necesito más saldo para viajar. YPF Ruta.", "r": "Si el viaje está confirmado, enviá los datos del ruteo por WhatsApp +54 9 11 7637-6272 y te respondemos a la brevedad. \nSi estás fuera de horario de atención y no podés seguir viaje sin combustible, comunicate con la Guardia SIXCO: +54 9 11 3076-4121 (urgencias)."}, {"p": "¿Cuánto demora la acreditación de saldo YER gasoil?", "r": "La acreditación suele demorar entre 40 y 50 minutos. Si no lo ves reflejado, avisá en el acto."}, {"p": "Me asignaron saldo y en la app no me figura actualizado.", "r": "Puede ser una caída del sistema."}],
+  puntoSixco:[{"nombre": "Punto SIXCO Catriló", "ubicacion": "RN5, Km 525.3, L6330 Catriló, La Pampa", "maps": "https://maps.app.goo.gl/TLAfyWkmeisKKVJr5", "servicios": ["Duchas y baño exclusivos", "Estacionamiento seguro y amplio", "Combos para la flota SIXCO", "Sala de estar", "Microondas", "Heladera", "Cocina"]}, {"nombre": "Punto SIXCO Mercedes", "ubicacion": "RN5 km 107, B6600 Mercedes, Provincia de Buenos Aires", "maps": "https://maps.app.goo.gl/3HS7NKvzv5u85MFz7", "servicios": ["Duchas y baño", "Estacionamiento seguro y amplio", "Sala de estar", "Microondas", "Heladera"]}],
+  otrosDescansos:{"nombre": "Otros descansos habilitados", "mid": "1A_-16e22iWutyMZfqwtf_ox8RWOGGIg"},
+  documentos:[{"seccion": "Seguridad", "titulo": "Rol de llamado SIXCO", "desc": "A quién llamar y en qué orden", "archivo": "docs/rol-de-llamado.png", "thumb": "assets/thumbs/rol-de-llamado.webp", "tipo": "IMG"}, {"seccion": "Políticas", "titulo": "Política integrada de gestión", "desc": "Calidad, seguridad y salud", "archivo": "docs/politica-calidad-seguridad-vial.pdf", "thumb": "assets/thumbs/politica-calidad-seguridad-vial.webp", "tipo": "PDF"}, {"seccion": "Políticas", "titulo": "Política alcohol y drogas", "desc": "Tolerancia CERO al consumo de alcohol, somníferos, estupefacientes, mascado de COCA o bebidas energizantes. Para más detalles, leé la política completa.", "archivo": "docs/politica-alcohol-drogas.pdf", "thumb": "assets/thumbs/politica-alcohol-drogas.webp", "tipo": "PDF"}, {"seccion": "Políticas", "titulo": "Política de Sustentabilidad", "desc": "", "archivo": "docs/politica-sustentabilidad.pdf", "thumb": "assets/thumbs/politica-sustentabilidad.webp", "tipo": "PDF"}],
+  links:{"verificacion": "https://docs.google.com/forms/d/e/1FAIpQLSds2tLB6CRqqZNtBKhY_eAK9gCETkkGUrfZdcn2D5uhg5c7pw/viewform?usp=sharing&ouid=111424613538475531618", "grupo": "https://chat.whatsapp.com/KhSCSbvYkuw0wrrDzRJnKW", "induccion": "https://drive.google.com/file/d/1jlZp3FmRA3R8Q6VIr5HsRhVfD0llk8Ib/view?usp=sharing"},
+  contactos:[{"area": "Higiene y Seguridad", "rol": "Responsable HYS", "horario": "24 hs", "numero": "5491138147785"}, {"area": "Coordinación YPF", "rol": "Coordinación Arenas", "horario": "24 hs", "numero": "5491138150616"}, {"area": "Copiloto Sixco", "rol": "Copiloto Sixco", "horario": "24 hs", "numero": "5491138153648"}, {"area": "Grupo oficial SIXCO–YPF", "rol": "Canal de comunicados", "horario": "", "link": "https://chat.whatsapp.com/KhSCSbvYkuw0wrrDzRJnKW"}]
 };
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ej=o=>o&&o.ej?'<span class="ej">Dato de ejemplo</span>':"";
 const fmtNum=n=>{const d=String(n).replace(/\D/g,"");return d.length>=12?`+${d.slice(0,2)} ${d.slice(2,3)} ${d.slice(3,5)} ${d.slice(5,9)}-${d.slice(9)}`:"+"+d};
+const mmEmbed=id=>id?`https://www.google.com/maps/d/embed?mid=${id}`:"";
+const mmView=id=>id?`https://www.google.com/maps/d/viewer?mid=${id}`:"";
+const linkify=t=>esc(t).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>').replace(/\n/g,"<br>");
 const wa=(num,msg)=>`https://wa.me/${num}${msg?"?text="+encodeURIComponent(msg):""}`;
 const ICON={
   pin:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>',
@@ -555,6 +545,18 @@ const ICON={
   shield:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>'
 };
 
+/* Links sueltos */
+document.querySelectorAll("[data-link]").forEach(a=>{const u=DATA.links[a.dataset.link];if(u){a.href=u;a.target="_blank";a.rel="noopener"}else{a.setAttribute("data-todo","")}});
+
+/* Documentos con miniatura */
+document.querySelectorAll("[data-docs]").forEach(box=>{
+  const L=DATA.documentos.filter(d=>d.seccion===box.dataset.docs);
+  box.insertAdjacentHTML("afterbegin",L.map(d=>`<a class="doc" href="${esc(d.archivo)}" target="_blank" rel="noopener" data-s="${esc(d.titulo+" "+d.desc)}"><div class="thumb photo"><img src="${esc(d.thumb)}" alt="" loading="lazy" width="360" height="480"><span class="type">${esc(d.tipo)}</span></div><div class="meta"><b>${esc(d.titulo)}</b>${d.desc?`<span>${esc(d.desc)}</span>`:""}</div></a>`).join(""));
+});
+
+/* HYS */
+(function(){const c=DATA.contactos.find(x=>/higiene/i.test(x.area));if(!c)return;$("#hysRol").textContent=c.rol;$("#hysHor").textContent=c.horario;$("#hysNum").textContent=fmtNum(c.numero)})();
+
 /* WhatsApp */
 document.querySelectorAll("[data-wa]").forEach(a=>{const w=DATA.whatsapp[a.dataset.wa];a.href=wa(w.numero,w.mensaje);a.target="_blank";a.rel="noopener"});
 document.querySelectorAll("[data-todo]").forEach(a=>{a.addEventListener("click",e=>{if(a.getAttribute("href")==="#")e.preventDefault()});a.title="Pendiente: se completa con el material final"});
@@ -563,7 +565,7 @@ document.querySelectorAll("[data-todo]").forEach(a=>{a.addEventListener("click",
 (function(){
   const box=$("#datos"),dots=$("#dots"),L=DATA.datosRotativos;let i=0;
   dots.innerHTML=L.map(()=>"<i></i>").join("");
-  const show=()=>{const d=L[i];box.innerHTML=`<div class="cifra">${esc(d.cifra)}</div><div class="txt">${esc(d.texto)}<small>${esc(d.fuente)}${d.ej?" · ejemplo":""}</small></div>`;[...dots.children].forEach((x,k)=>x.classList.toggle("on",k===i))};
+  const show=()=>{const d=L[i];box.innerHTML=d.cifra?`<div class="cifra">${esc(d.cifra)}</div><div class="txt">${esc(d.texto)}${d.fuente?`<small>${esc(d.fuente)}</small>`:""}</div>`:`<div class="cifra" aria-hidden="true">${ICON.shield}</div><div class="txt msg">${esc(d.texto)}</div>`;[...dots.children].forEach((x,k)=>x.classList.toggle("on",k===i))};
   show();
   if(!matchMedia("(prefers-reduced-motion: reduce)").matches)setInterval(()=>{i=(i+1)%L.length;show()},4000);
 })();
@@ -588,7 +590,7 @@ const llegar=(url,txt)=>url?`<a class="btn sec2" href="${esc(url)}" target="_bla
         <span class="eyebrow">Tramo</span>
         ${r.km?`<div class="kmtot">${esc(r.km)} <span>km aprox.</span></div>`:""}
         ${r.mymaps?`<div class="embed" id="mapRuta"></div>`:""}
-        ${(r.mymaps||r.navegar)?`<div class="btns">${r.mymaps?`<a class="btn sec2" href="${esc(r.mymaps)}" target="_blank" rel="noopener">${ICON.map}Mapa completo</a>`:""}${r.navegar?`<a class="btn pri" href="${esc(r.navegar)}" target="_blank" rel="noopener">${ICON.nav}Navegar</a>`:""}</div>`:""}
+        ${(r.mymaps||r.navegar)?`<div class="btns">${r.mymaps?`<a class="btn sec2" href="${esc(mmView(r.mymaps))}" target="_blank" rel="noopener">${ICON.map}Mapa completo</a>`:""}${r.navegar?`<a class="btn pri" href="${esc(r.navegar)}" target="_blank" rel="noopener">${ICON.nav}Navegar</a>`:""}</div>`:""}
         ${r.cons&&r.cons.length?`<h4 style="font-size:15px;font-weight:800">A tener en cuenta en este tramo</h4><ul class="cons alert">${r.cons.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`:""}
       </div></div>`:`<div class="tramo"><div class="rail"></div><div class="body" style="padding-bottom:18px"></div></div>`;
     box.innerHTML=`<div class="card" data-s="${esc(r.nombre+" "+o.nombre+" "+d.nombre+" "+o.localidad+" hoja de ruta recorrido")}"><div class="ruta">
@@ -604,7 +606,7 @@ const llegar=(url,txt)=>url?`<a class="btn sec2" href="${esc(url)}" target="_bla
         ${llegar(d.maps,"Cómo llegar a la descarga")}
       </div></div>
     </div></div>`;
-    if(r.mymaps)embedPlaceholder($("#mapRuta"),r.mymaps,"Mapa del recorrido");
+    if(r.mymaps)embedPlaceholder($("#mapRuta"),mmEmbed(r.mymaps),"Mapa del recorrido");
     [...tabs.children].forEach((t,i)=>t.setAttribute("aria-selected",i===k));
   };
   tabs.addEventListener("click",e=>{const t=e.target.closest(".tab");if(t)render(+t.dataset.k)});
@@ -664,15 +666,20 @@ const svgI=k=>`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" strok
 $("#epp").innerHTML=DATA.epp.map(e=>`<div><span class="ic">${svgI(e.i)}</span><span>${esc(e.n)}</span></div>`).join("");
 $("#epc").innerHTML=DATA.epc.map(e=>`<div><span class="ic">${svgI(e.i)}${e.cant?`<span class="qty">x${esc(e.cant)}</span>`:""}</span><span>${esc(e.n)}</span>${e.det?`<small>${esc(e.det)}</small>`:""}</div>`).join("");
 
+/* Punto SIXCO */
+$("#puntoSixco").innerHTML=DATA.puntoSixco.map(p=>`<div class="ps"><b>${esc(p.nombre)}</b><span class="ps-ub">${esc(p.ubicacion)}</span>${p.servicios.length?`<div class="franjas">${p.servicios.map(x=>`<span>${esc(x)}</span>`).join("")}</div>`:""}${p.maps?`<a class="btn sec2" href="${esc(p.maps)}" target="_blank" rel="noopener">${ICON.pin}Cómo llegar</a>`:""}</div>`).join("");
+if(DATA.otrosDescansos){const o=DATA.otrosDescansos;$("#otrosDescansos").innerHTML=`<span class="eyebrow">${esc(o.nombre)}</span><div class="embed" id="mapDescansos"></div><a class="btn sec2" href="${esc(mmView(o.mid))}" target="_blank" rel="noopener">${ICON.map}Ver mapa completo</a>`;embedPlaceholder($("#mapDescansos"),mmEmbed(o.mid),"Mapa de descansos")}
+
 /* Avisos */
 (function(){
   const M=["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
-  $("#listaAvisos").innerHTML=DATA.avisos.map(a=>{const [y,m,d]=a.fecha.split("-");return `<div class="card" data-s="${esc(a.titulo+" "+a.texto+" aviso novedad")}"><div class="aviso"><div class="fecha"><b>${+d}</b><small>${M[+m-1]}</small></div><div style="display:grid;gap:6px"><h3>${esc(a.titulo)}</h3><p>${esc(a.texto)}</p>${a.link?`<a class="btn pri" href="${esc(a.link)}" target="_blank" rel="noopener" style="justify-self:start;min-height:44px">Sumarme</a>`:""}${ej(a)}</div></div></div>`}).join("");
-  $("#videos").innerHTML=DATA.videos.map(v=>`<a class="video" href="${esc(v.link)}" target="_blank" rel="noopener"><div class="vt">${ICON.play}</div><div><b style="display:block;font-weight:800;font-size:15px">${esc(v.titulo)}</b><span style="font-size:13px;color:var(--gray);font-weight:600">${esc(v.duracion)} · YouTube${v.ej?" · ejemplo":""}</span></div></a>`).join("");
+  const hoy=new Date().toISOString().slice(0,10);
+  $("#listaAvisos").innerHTML=DATA.avisos.filter(a=>!a.hasta||a.hasta>=hoy).map(a=>{const [y,m,d]=a.fecha.split("-");return `<div class="card" data-s="${esc(a.titulo+" "+a.texto+" aviso novedad")}"><div class="aviso"><div class="fecha"><b>${+d}</b><small>${M[+m-1]}</small></div><div style="display:grid;gap:6px"><h3>${esc(a.titulo)}</h3><p>${esc(a.texto)}</p>${a.link?`<a class="btn pri" href="${esc(a.link)}" target="_blank" rel="noopener" style="justify-self:start;min-height:44px">Sumarme</a>`:""}${ej(a)}</div></div></div>`}).join("");
+  $("#videos").innerHTML=DATA.videos.map(v=>`<a class="video" href="${esc(v.link)}" target="_blank" rel="noopener"><div class="vt">${ICON.play}</div><div><b style="display:block;font-weight:800;font-size:15px">${esc(v.titulo)}</b><span style="font-size:13px;color:var(--gray);font-weight:600">${[v.duracion,/youtu/.test(v.link)?"YouTube":/drive\.google/.test(v.link)?"Google Drive":""].filter(Boolean).map(esc).join(" · ")}</span></div></a>`).join("");
 })();
 
 /* FAQ */
-$("#faq").innerHTML=DATA.faq.map(f=>`<details data-s="${esc(f.p+" "+f.r)}"><summary>${esc(f.p)}</summary><p>${esc(f.r)}${f.ej?" (ejemplo)":""}</p></details>`).join("");
+$("#faq").innerHTML=DATA.faq.map(f=>`<details data-s="${esc(f.p+" "+f.r)}"><summary>${esc(f.p)}</summary><p>${linkify(f.r)}</p></details>`).join("");
 
 /* Contactos */
 $("#contactos").innerHTML=DATA.contactos.map(c=>`<div class="card contacto" data-s="${esc(c.area+" "+c.rol+" contacto telefono whatsapp")}">
