@@ -269,6 +269,7 @@ footer b{font-size:16px;font-weight:800}
 .epc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .epc>div{background:var(--bg);border-radius:12px;padding:14px 10px;text-align:center;display:grid;justify-items:center;align-content:start;gap:6px;font-size:13px;font-weight:700}
 .epc .ic{background:var(--orange-soft);color:var(--alert)}
+.epc>div:last-child:nth-child(odd){grid-column:1/-1}
 .epc small{font-size:12px;font-weight:600;color:var(--gray)}
 .qty{position:absolute;top:-4px;right:-10px;background:var(--alert);color:#fff;font-size:12px;font-weight:900;border-radius:999px;padding:3px 7px;line-height:1}
 .embed .load{position:absolute;inset:0}
@@ -285,6 +286,13 @@ footer b{font-size:16px;font-weight:800}
 .txt.msg{font-size:16px;font-weight:700;color:#231F20}
 .datos .cifra svg{width:34px;height:34px}
 details p a{color:var(--petrol);font-weight:700;word-break:break-all}
+.caps{display:grid;gap:10px}
+.caps summary{list-style:none;cursor:pointer;position:relative;padding-right:40px}
+.caps summary::-webkit-details-marker{display:none}
+.caps summary::after{content:"+";position:absolute;right:18px;font-size:22px;font-weight:700}
+.caps[open] summary::after{content:"–"}
+.caps-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+@media (min-width:600px){.caps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 [data-hide]{display:none!important}
 @media (min-width:760px){.hero .wrap{max-width:980px;padding-block:40px 48px;gap:24px}.hero-head{grid-template-areas:"mojon txt hys";grid-template-columns:auto 1fr auto;gap:22px;align-items:center}.mojon{width:72px;padding:15px 0 11px}.mojon strong{font-size:38px}.hero .bajada{white-space:nowrap}.hero-hys{width:150px}.hero-hys img{width:84px;height:84px}.hero-hys small{font-size:11.5px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -301,7 +309,7 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
     </div>
     <nav class="nav" id="nav" aria-label="Secciones">
       <a href="#hoja-de-ruta">Hoja de ruta</a>
-      <a href="#carga">Carga y descarga</a>
+      <a href="#clima">Clima</a>
       <a href="#en-ruta">En ruta</a>
       <a href="#seguridad">Seguridad</a>
       <a href="#procedimientos">Procedimientos</a>
@@ -356,29 +364,23 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
     <div id="ruta"></div>
   </section>
 
-  <!-- 2 · Puntos de carga -->
-  <section class="sec" id="carga">
-    <div class="sec-head"><div class="step">2</div><div><h2>Carga y descarga</h2><p>Días y horarios de cada punto. Tocá el nombre o deslizá.</p></div></div>
-    <h3 class="sub">Puntos de carga</h3>
-    <div class="carousel" id="carCarga"></div>
-    <h3 class="sub down">Puntos de descarga</h3>
-    <div class="carousel" id="carDescarga"></div>
+  <!-- 2 · Clima -->
+  <section class="sec" id="clima">
+    <div class="sec-head"><div class="step">2</div><div><h2>Clima</h2><p>Revisá el clima antes de salir.</p></div></div>
+    <div class="card" data-s="clima ibicuy catrilo catriló añelo anelo viento lluvia">
+            <div class="tabs" role="tablist" id="climaTabs"></div>
+      <div class="embed" id="climaEmbed"></div>
+    </div>
   </section>
 
   <!-- 3 · En ruta -->
   <section class="sec" id="en-ruta">
-    <div class="sec-head"><div class="step">3</div><div><h2>En ruta</h2><p>Descansos, planilla y clima.</p></div></div>
+    <div class="sec-head"><div class="step">3</div><div><h2>En ruta</h2><p>Descansos habilitados en ruta.</p></div></div>
     <div class="card" data-s="punto sixco descanso descansos parada habilitada catrilo mercedes">
       <span class="eyebrow">Punto SIXCO</span>
       <h3>Descansos habilitados en ruta</h3>
       <div id="puntoSixco" class="ps-list"></div>
       <div id="otrosDescansos" style="display:grid;gap:10px"></div>
-    </div>
-    <div class="card" data-s="clima ibicuy catrilo catriló añelo anelo viento lluvia">
-      <span class="eyebrow">Clima en ruta</span>
-      <h3>Revisá el clima antes de salir</h3>
-      <div class="tabs" role="tablist" id="climaTabs"></div>
-      <div class="embed" id="climaEmbed"></div>
     </div>
   </section>
 
@@ -427,7 +429,11 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
     <div id="listaAvisos" style="display:grid;gap:10px"></div>
     <div class="card" data-s="capacitaciones videos youtube educacion vial">
       <h3>Capacitaciones</h3>
-            <div id="videos" style="display:grid;gap:12px"></div>
+      <div id="videos" style="display:grid;gap:12px"></div>
+      <details class="caps" data-s="capacitaciones 2026 febrero marzo mayo junio julio agosto septiembre octubre noviembre pdf">
+        <summary class="btn pri">Capacitaciones 2026</summary>
+        <div class="caps-grid" id="caps2026"></div>
+      </details>
     </div>
   </section>
 
@@ -487,8 +493,8 @@ const DATA={
   datosRotativos:[{"cifra": "0%", "texto": "Incidencias en la operación", "fuente": "En 2026"}, {"cifra": "5.518", "texto": "Descansos en Punto SIXCO", "fuente": "Desde febrero 2024"}, {"cifra": "100%", "texto": "Flota capacitada", "fuente": ""}, {"cifra": "", "texto": "Recordá usar los EPP correspondientes.", "fuente": ""}, {"cifra": "", "texto": "¡Gracias por sumarte a la capacitación de noviembre!", "fuente": ""}, {"cifra": "3.583", "texto": "Combos de comida entregados", "fuente": "2024-2026"}],
   /* Origen: export de rutas de la plataforma (Rutas (1).xlsx). Nombres del sistema; entre paréntesis Origen/Destino Ruta si no se repite. */
   origenes:{"cantera-el-mangrullo": {"nombre": "Cantera El Mangrullo", "ruta": "Ibicuy", "etiqueta": "Cantera El Mangrullo (Ibicuy)", "maps": "https://maps.app.goo.gl/zengEqTe69vjbWTv7", "horario": "Lunes a Domingo 24hs continuas"}, "arenera-del-arroyo": {"nombre": "Arenera del Arroyo", "ruta": "Cilio", "etiqueta": "Arenera del Arroyo (Cilio)", "maps": "https://maps.app.goo.gl/UDnQeeBmVLkcjFD4A", "horario": "Lun-Vie 07:00-18:00 hs | Sáb 07:00-12:00 hs"}, "arenera-buenos-aires-norte": {"nombre": "Arenera Buenos Aires Norte", "ruta": "San Pedro", "etiqueta": "Arenera Buenos Aires Norte (San Pedro)", "maps": "https://maps.app.goo.gl/Ux9V9okSdx5ARUHeA", "horario": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0"}, "arenas-santa-rosa": {"nombre": "Arenas Santa Rosa", "ruta": "Santa Rosa (Santa Fe)", "etiqueta": "Arenas Santa Rosa (Santa Fe)", "maps": "https://maps.app.goo.gl/vvE5EnhaqgHcqTKDA?g_st=aw", "horario": "Lunes a Viernes: 07:00 a 18:00hs."}},
-  destinos:{"planta-arenas-ypf-anelo": {"nombre": "Planta Arenas YPF Añelo", "ruta": "Anelo", "etiqueta": "Planta Arenas YPF Añelo", "maps": "https://maps.app.goo.gl/EtaMAZscksFsrxNX7", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-elg8-2": {"nombre": "Pozo ELG8-2", "ruta": "ELG8-2", "etiqueta": "Pozo ELG8-2", "maps": "https://www.google.com/maps/d/edit?mid=1GKiXek6eQXwEEMOdOrGUaP-XiS8gRZs&usp=sharing", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-elg5-2": {"nombre": "Pozo ELG5-2", "ruta": "ELG5-2", "etiqueta": "Pozo ELG5-2", "maps": "https://www.google.com/maps/d/edit?mid=1GKiXek6eQXwEEMOdOrGUaP-XiS8gRZs&usp=sharing", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-laje46": {"nombre": "Pozo LAJE46", "ruta": "LAJE46", "etiqueta": "Pozo LAJE46", "maps": "https://maps.app.goo.gl/gG7ayi6tWFYTUja59", "horario": "Lunes a Domingo 24hs continuas"}},
-  recorridos:[{"id": "mangrullo-anelo", "nombre": "Mangrullo → Añelo", "origen": "cantera-el-mangrullo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun a dom 24:00hs", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "11mKOg930Tllb-8cZPcTorpBaNPOKA9k", "activo": true}, {"id": "cilio-anelo", "nombre": "Cilio → Añelo", "origen": "arenera-del-arroyo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun-Vie 07:00-18:00 hs | Sáb 07:00-12:00 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1W_ZvBNGhcHEw-BY5rudBSxPppzKzuvs", "activo": true}, {"id": "mangrullo-elg8-2", "nombre": "Mangrullo → ELG8-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg8-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1TInpsPuZGe8y00TX1URd-xvOEBIPGk0", "activo": true}, {"id": "mangrullo-elg5-2", "nombre": "Mangrullo → ELG5-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg5-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1TInpsPuZGe8y00TX1URd-xvOEBIPGk0", "activo": true}, {"id": "sanpedro-laje46", "nombre": "San Pedro → LAJE46", "origen": "arenera-buenos-aires-norte", "destino": "pozo-laje46", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas"}, {"id": "sanpedro-anelo", "nombre": "San Pedro → Añelo", "origen": "arenera-buenos-aires-norte", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun 6:00 a Sáb 13 hs | Dom 14 a 22 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1B5fUIKxdjxLGNPoA_fHjuCbJUQzf-7o", "activo": false}, {"id": "san-pedro-elg5-2", "nombre": "San Pedro → ELG5-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg5-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1VCxu-GZKk_VZUvtj2IVh5oq3vm8xKy8", "activo": true}, {"id": "san-pedro-elg8-2", "nombre": "San Pedro → ELG8-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg8-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1VCxu-GZKk_VZUvtj2IVh5oq3vm8xKy8", "activo": true}, {"id": "santa-rosa-anelo", "nombre": "Santa Rosa → Añelo", "origen": "arenas-santa-rosa", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lunes a Viernes: 07:00 a 18:00hs.", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1xOtvsm9o_IxnoWbJZOjoMEIJdJLr2e8", "activo": true}],
+  destinos:{"planta-arenas-ypf-anelo": {"nombre": "Planta Arenas YPF Añelo", "ruta": "Anelo", "etiqueta": "Planta Arenas YPF Añelo", "maps": "https://maps.app.goo.gl/EtaMAZscksFsrxNX7", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-elg8-2": {"nombre": "Pozo ELG8-2", "ruta": "ELG8-2", "etiqueta": "Pozo ELG8-2", "maps": "https://www.google.com/maps/d/edit?mid=1GKiXek6eQXwEEMOdOrGUaP-XiS8gRZs&usp=sharing", "horario": "Lunes a Domingo 24hs continuas"}, "pozo-elg5-2": {"nombre": "Pozo ELG5-2", "ruta": "ELG5-2", "etiqueta": "Pozo ELG5-2", "maps": "https://www.google.com/maps/d/edit?mid=1GKiXek6eQXwEEMOdOrGUaP-XiS8gRZs&usp=sharing", "horario": "Lunes a Domingo 24hs continuas"}},
+  recorridos:[{"id": "mangrullo-anelo", "nombre": "Mangrullo → Añelo", "origen": "cantera-el-mangrullo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun a dom 24:00hs", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "11mKOg930Tllb-8cZPcTorpBaNPOKA9k", "activo": true}, {"id": "cilio-anelo", "nombre": "Cilio → Añelo", "origen": "arenera-del-arroyo", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun-Vie 07:00-18:00 hs | Sáb 07:00-12:00 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1W_ZvBNGhcHEw-BY5rudBSxPppzKzuvs", "activo": true}, {"id": "mangrullo-elg8-2", "nombre": "Mangrullo → ELG8-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg8-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1TInpsPuZGe8y00TX1URd-xvOEBIPGk0", "activo": true}, {"id": "mangrullo-elg5-2", "nombre": "Mangrullo → ELG5-2", "origen": "cantera-el-mangrullo", "destino": "pozo-elg5-2", "horarioCarga": "Lunes a Domingo 24hs continuas", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1TInpsPuZGe8y00TX1URd-xvOEBIPGk0", "activo": true}, {"id": "sanpedro-anelo", "nombre": "San Pedro → Añelo", "origen": "arenera-buenos-aires-norte", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lun 6:00 a Sáb 13 hs | Dom 14 a 22 hs", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1B5fUIKxdjxLGNPoA_fHjuCbJUQzf-7o", "activo": false}, {"id": "san-pedro-elg5-2", "nombre": "San Pedro → ELG5-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg5-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1VCxu-GZKk_VZUvtj2IVh5oq3vm8xKy8", "activo": true}, {"id": "san-pedro-elg8-2", "nombre": "San Pedro → ELG8-2", "origen": "arenera-buenos-aires-norte", "destino": "pozo-elg8-2", "horarioCarga": "Lunes de 6:00 a 00:00 | Martes a viernes: 24 hs | Sábado de 00:0", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1VCxu-GZKk_VZUvtj2IVh5oq3vm8xKy8", "activo": true}, {"id": "santa-rosa-anelo", "nombre": "Santa Rosa → Añelo", "origen": "arenas-santa-rosa", "destino": "planta-arenas-ypf-anelo", "horarioCarga": "Lunes a Viernes: 07:00 a 18:00hs.", "horarioDescarga": "Lunes a Domingo 24hs continuas", "mymaps": "1xOtvsm9o_IxnoWbJZOjoMEIJdJLr2e8", "activo": true}],
   clima:[
     {lugar:"Ibicuy",lat:-33.7267,lon:-59.1811},
     {lugar:"Catriló",lat:-36.4067,lon:-63.4225},
@@ -498,11 +504,11 @@ const DATA={
     {n:"Ropa de trabajo",i:"ropa"},{n:"Botines de seguridad",i:"botin"},{n:"Guantes",i:"guantes"},
     {n:"Casco",i:"casco"},{n:"Lentes de seguridad",i:"lentes"},{n:"Chaleco reflectivo",i:"chaleco"}
   ],
+  capacitaciones2026:[{"mes": "Febrero", "link": "https://drive.google.com/file/d/1z5J0VS9j3c_p7i8fyB1i_BNRPXKSB4NO/view?usp=sharing"}, {"mes": "Marzo", "link": "https://drive.google.com/file/d/1L_1fGJithjoX8jyRpTucTHcsZBKS5wp-/view?usp=sharing"}, {"mes": "Mayo", "link": "https://drive.google.com/file/d/1gQDzdEtVIvxNbgVqZJiauI_HO0Lxl0SW/view?usp=sharing"}, {"mes": "Junio", "link": "https://drive.google.com/file/d/1wZHC4N-WijNp3qBwWh6QyKS6mL_9T1Vo/view?usp=sharing"}, {"mes": "Julio", "link": "https://drive.google.com/file/d/1P1ydBWiQht39dh5maRcao0PF9RD6IwBq/view?usp=sharing"}, {"mes": "Agosto", "link": "https://drive.google.com/file/d/1dx19JhI5XUdyUiLUiaCQZFxZMCX28nLU/view?usp=sharing"}, {"mes": "Septiembre", "link": "https://drive.google.com/file/d/1w1tPcqwcjkF8OB8M_0qaNLzBSL3bPzk2/view?usp=sharing"}, {"mes": "Octubre", "link": "https://drive.google.com/file/d/1QiR0FHxDebdio08fHASdCE7uunIVETpq/view?usp=sharing"}, {"mes": "Noviembre", "link": "https://drive.google.com/file/d/1jJS7vVNPnDv6z70l1qkL1ak91YF1XTU6/view?usp=sharing"}],
   epc:[
     {n:"Conos",cant:"3",i:"cono"},
     {n:"Balizas",cant:"2",i:"baliza"},
-    {n:"Matafuego en cabina",cant:"1",det:"2,5 kg",i:"mata"},
-    {n:"Matafuego en enganche",cant:"",det:"1 de 10 kg o 2 de 5 kg",i:"mata"}
+    {n:"Matafuegos",cant:"",det:"1 de 2,5 kg + 1 de 10 kg o 2 de 5 kg",i:"mata"}
   ],
   avisos:[{"fecha": "2026-11-20", "titulo": "Trivia SIXCO: recordá completar las 5 preguntas del mes.", "texto": "Seguridad vial en ruta. Lleva 5min.", "link": "", "hasta": "2026-11-21"}],
   videos:[{"titulo": "Inducción YPF", "duracion": "", "link": "https://drive.google.com/file/d/1jlZp3FmRA3R8Q6VIr5HsRhVfD0llk8Ib/view?usp=sharing"}],
@@ -623,8 +629,6 @@ function carousel(el,items,tipo){
   let raf;tr.addEventListener("scroll",()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(upd)},{passive:true});
   addEventListener("resize",upd);upd();
 }
-carousel($("#carCarga"),Object.values(DATA.origenes),"Puntos de carga");
-carousel($("#carDescarga"),Object.values(DATA.destinos),"Puntos de descarga");
 
 /* Clima */
 (function(){
@@ -663,6 +667,9 @@ if(DATA.otrosDescansos){const o=DATA.otrosDescansos;$("#otrosDescansos").innerHT
   $("#listaAvisos").innerHTML=DATA.avisos.filter(a=>!a.hasta||a.hasta>=hoy).map(a=>{const [y,m,d]=a.fecha.split("-");return `<div class="card" data-s="${esc(a.titulo+" "+a.texto+" aviso novedad")}"><div class="aviso"><div class="fecha"><b>${+d}</b><small>${M[+m-1]}</small></div><div style="display:grid;gap:6px"><h3>${esc(a.titulo)}</h3><p>${esc(a.texto)}</p>${a.link?`<a class="btn pri" href="${esc(a.link)}" target="_blank" rel="noopener" style="justify-self:start;min-height:44px">Sumarme</a>`:""}${ej(a)}</div></div></div>`}).join("");
   $("#videos").innerHTML=DATA.videos.map(v=>`<a class="video" href="${esc(v.link)}" target="_blank" rel="noopener"><div class="vt">${/youtu/.test(v.link)?ICON.play:ICON.doc}</div><div><b style="display:block;font-weight:800;font-size:15px">${esc(v.titulo)}</b><span style="font-size:13px;color:var(--gray);font-weight:600">${[v.duracion,/youtu/.test(v.link)?"YouTube":/drive\.google/.test(v.link)?"Google Drive":""].filter(Boolean).map(esc).join(" · ")}</span></div></a>`).join("");
 })();
+
+/* Capacitaciones 2026 */
+$("#caps2026").innerHTML=DATA.capacitaciones2026.map(c=>`<a class="btn sec2" href="${esc(c.link)}" target="_blank" rel="noopener">${ICON.doc}${esc(c.mes)}</a>`).join("");
 
 /* FAQ */
 $("#faq").innerHTML=DATA.faq.map(f=>`<details data-s="${esc(f.p+" "+f.r)}"><summary>${esc(f.p)}</summary><p>${linkify(f.r)}</p></details>`).join("");
