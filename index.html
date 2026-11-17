@@ -293,6 +293,27 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
 .caps[open] summary::after{content:"–"}
 .caps-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
 @media (min-width:600px){.caps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.wx-alert{display:flex;gap:12px;align-items:center;background:var(--orange-soft);color:var(--alert);border-radius:var(--r);padding:12px 14px}
+.wx-alert[hidden]{display:none}
+.wx-alert b{display:block;font-size:15px;font-weight:800}
+.wx-alert span{font-size:13.5px;font-weight:600;color:var(--ink)}
+.wx-alert svg{flex:0 0 auto}
+.wx-days{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.wx-days .wx-note{grid-column:1/-1}
+.wx-day{display:grid;justify-items:center;gap:3px;text-align:center;border-radius:12px;padding:10px 4px}
+.wx-day.ok{background:var(--ok-soft);color:var(--ok)}
+.wx-day.warn{background:var(--warn-soft);color:var(--warn)}
+.wx-day.alert{background:var(--orange-soft);color:var(--alert)}
+.wx-d{font-size:12px;font-weight:800;color:var(--ink)}
+.wx-day b{font-size:14px;font-weight:800}
+.wx-t{font-size:15px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.wx-p{font-size:11.5px;font-weight:600;color:var(--gray)}
+.wx-note{font-size:12px;color:var(--gray);font-weight:600}
+.wx-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:7px;vertical-align:1px;background:transparent}
+.wx-dot.ok{background:var(--ok)}.wx-dot.warn{background:var(--warn)}.wx-dot.alert{background:var(--alert)}
+.wx-layers{display:flex;gap:8px}
+.wx-layer{flex:1;border:2px solid var(--line);background:var(--surface);font:inherit;font-weight:800;font-size:14px;border-radius:10px;min-height:42px;cursor:pointer;color:var(--ink)}
+.wx-layer[aria-pressed="true"]{background:var(--sky-soft);border-color:var(--petrol);color:var(--petrol-deep)}
 [data-hide]{display:none!important}
 @media (min-width:760px){.hero .wrap{max-width:980px;padding-block:40px 48px;gap:24px}.hero-head{grid-template-areas:"mojon txt hys";grid-template-columns:auto 1fr auto;gap:22px;align-items:center}.mojon{width:72px;padding:15px 0 11px}.mojon strong{font-size:38px}.hero .bajada{white-space:nowrap}.hero-hys{width:150px}.hero-hys img{width:84px;height:84px}.hero-hys small{font-size:11.5px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -367,9 +388,16 @@ details p a{color:var(--petrol);font-weight:700;word-break:break-all}
   <!-- 2 · Clima -->
   <section class="sec" id="clima">
     <div class="sec-head"><div class="step">2</div><div><h2>Clima</h2><p>Revisá el clima antes de salir.</p></div></div>
-    <div class="card" data-s="clima ibicuy catrilo catriló añelo anelo viento lluvia">
-            <div class="tabs" role="tablist" id="climaTabs"></div>
+    <div class="wx-alert" id="wxAlert" hidden></div>
+    <div class="card" data-s="clima ibicuy catrilo catriló añelo anelo viento lluvia tormenta temperatura pronostico">
+      <div class="tabs" role="tablist" id="climaTabs"></div>
+      <div class="wx-days" id="wxDays"><p class="wx-note">Cargando pronóstico…</p></div>
+      <div class="wx-layers" role="group" aria-label="Capa del mapa">
+        <button type="button" class="wx-layer" data-o="rain" aria-pressed="true">Lluvia</button>
+        <button type="button" class="wx-layer" data-o="temp" aria-pressed="false">Temperatura</button>
+      </div>
       <div class="embed" id="climaEmbed"></div>
+      <p class="wx-note">Pronóstico: Open-Meteo. Mapa: Windy.</p>
     </div>
   </section>
 
@@ -565,7 +593,7 @@ document.querySelectorAll("[data-todo]").forEach(a=>{a.addEventListener("click",
 /* Embebidos: cargan al abrir la página. Si falta el link, se muestra "pendiente". */
 function embedPlaceholder(el,src,label){
   if(!src){el.innerHTML=`<div class="load"><span class="circle">${ICON.map}</span><b>${esc(label)}</b><small>Pendiente: link de My Maps</small></div>`;return}
-  el.innerHTML=`<div class="load" aria-hidden="true"><span class="circle">${ICON.map}</span><small>Cargando ${esc(label).toLowerCase()}…</small></div><iframe src="${esc(src)}" title="${esc(label)}" allowfullscreen></iframe>`;
+  el.innerHTML=`<div class="load" aria-hidden="true"><span class="circle">${ICON.map}</span><small>Cargando mapa…</small></div><iframe src="${esc(src)}" title="${esc(label)}" allowfullscreen></iframe>`;
 }
 document.querySelectorAll(".embed[data-label]").forEach(el=>embedPlaceholder(el,el.dataset.src,el.dataset.label));
 
@@ -630,14 +658,44 @@ function carousel(el,items,tipo){
   addEventListener("resize",upd);upd();
 }
 
-/* Clima */
+/* Clima: pronóstico (Open-Meteo) + mapa Windy */
 (function(){
-  const t=$("#climaTabs"),box=$("#climaEmbed"),C=DATA.clima;
-  const src=c=>`https://embed.windy.com/embed2.html?lat=${c.lat}&lon=${c.lon}&detailLat=${c.lat}&detailLon=${c.lon}&zoom=8&level=surface&overlay=wind&product=ecmwf&marker=true&calendar=now&metricWind=km%2Fh&metricTemp=%C2%B0C`;
-  t.innerHTML=C.map((c,k)=>`<button class="tab" role="tab" type="button" aria-selected="${k===0}" data-k="${k}">${esc(c.lugar)}</button>`).join("");
-  const render=k=>{embedPlaceholder(box,src(C[k]),"Clima en "+C[k].lugar);[...t.children].forEach((x,i)=>x.setAttribute("aria-selected",i===k))};
+  const t=$("#climaTabs"),box=$("#climaEmbed"),days=$("#wxDays"),alertBox=$("#wxAlert"),C=DATA.clima;
+  let cur=0,layer="rain",fc={};
+  const src=c=>`https://embed.windy.com/embed2.html?lat=${c.lat}&lon=${c.lon}&detailLat=${c.lat}&detailLon=${c.lon}&zoom=8&level=surface&overlay=${layer}&product=ecmwf&marker=true&calendar=now&metricWind=km%2Fh&metricTemp=%C2%B0C`;
+  const DIAS=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+  const verdict=(code,prob,mm,gust)=>{
+    if(code>=95)return{n:"alert",t:"Tormenta"};
+    if((prob??0)>=50||(mm??0)>=2)return{n:"warn",t:"Lluvia"};
+    if((gust??0)>=60)return{n:"warn",t:"Viento fuerte"};
+    return{n:"ok",t:"Normal"};
+  };
+  const ICO={ok:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+    warn:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 9a3.5 3.5 0 0 1 0 7H7Z"/><path d="M8 19l-1 2M12 19l-1 2M16 19l-1 2"/></svg>',
+    alert:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 8a3.5 3.5 0 0 1 0 7H7Z"/><path d="m13 13-3 5h4l-3 5"/></svg>'};
+  t.innerHTML=C.map((c,k)=>`<button class="tab" role="tab" type="button" aria-selected="${k===0}" data-k="${k}">${esc(c.lugar)}<i class="wx-dot" data-dot="${k}"></i></button>`).join("");
+  const drawDays=()=>{
+    const f=fc[cur];
+    if(f===undefined){days.innerHTML='<p class="wx-note">Cargando pronóstico…</p>';return}
+    if(f===null){days.innerHTML='<p class="wx-note">No pudimos cargar el pronóstico. Revisá el mapa de abajo.</p>';return}
+    days.innerHTML=f.map((d,i)=>`<div class="wx-day ${d.v.n}"><span class="wx-d">${i===0?"Hoy":i===1?"Mañana":DIAS[d.date.getDay()]}</span>${ICO[d.v.n]}<b>${esc(d.v.t)}</b><span class="wx-t">${Math.round(d.max)}° / ${Math.round(d.min)}°</span><span class="wx-p">Lluvia ${d.prob??0}%${d.mm>=0.1?` · ${d.mm.toFixed(1).replace(".",",")} mm`:""}</span></div>`).join("");
+  };
+  const drawAlert=()=>{
+    const bad=C.map((c,k)=>({c,f:fc[k]})).filter(x=>x.f&&x.f.slice(0,2).some(d=>d.v.n!=="ok"));
+    C.forEach((c,k)=>{const f=fc[k],dot=t.querySelector(`[data-dot="${k}"]`);if(dot&&f)dot.className="wx-dot "+(f.slice(0,2).some(d=>d.v.n==="alert")?"alert":f.slice(0,2).some(d=>d.v.n==="warn")?"warn":"ok")});
+    if(!bad.length){alertBox.hidden=true;return}
+    alertBox.hidden=false;
+    alertBox.innerHTML=`${ICO.warn}<div><b>Atención en ruta (hoy y mañana)</b><span>${bad.map(x=>{const d=x.f.slice(0,2).find(d=>d.v.n!=="ok");return `${esc(x.c.lugar)}: ${esc(d.v.t.toLowerCase())} ${x.f[0]===d?"hoy":"mañana"}`}).join(" · ")}</span></div>`;
+  };
+  const render=k=>{cur=k;embedPlaceholder(box,src(C[k]),"Clima en "+C[k].lugar);[...t.children].forEach((x,i)=>x.setAttribute("aria-selected",i===k));drawDays()};
   t.addEventListener("click",e=>{const b=e.target.closest(".tab");if(b)render(+b.dataset.k)});
+  document.querySelectorAll(".wx-layer").forEach(b=>b.addEventListener("click",()=>{layer=b.dataset.o;document.querySelectorAll(".wx-layer").forEach(x=>x.setAttribute("aria-pressed",x===b));render(cur)}));
   render(0);
+  const lat=C.map(c=>c.lat).join(","),lon=C.map(c=>c.lon).join(",");
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_gusts_10m_max&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=3`)
+    .then(r=>{if(!r.ok)throw 0;return r.json()})
+    .then(j=>{const arr=Array.isArray(j)?j:[j];arr.forEach((x,k)=>{const d=x.daily;fc[k]=d.time.map((tm,i)=>({date:new Date(tm+"T12:00:00"),max:d.temperature_2m_max[i],min:d.temperature_2m_min[i],prob:d.precipitation_probability_max[i],mm:d.precipitation_sum[i]??0,v:verdict(d.weather_code[i],d.precipitation_probability_max[i],d.precipitation_sum[i],d.wind_gusts_10m_max[i])}))});drawDays();drawAlert()})
+    .catch(()=>{C.forEach((c,k)=>fc[k]=null);drawDays()});
 })();
 
 /* EPP */
